@@ -14,6 +14,15 @@ export const Colors = {
     backgroundElement: '#F0F0F3',
     backgroundSelected: '#E0E1E6',
     textSecondary: '#60646C',
+    // --- Tripso eklenenler (light) ---
+    primary: '#FF7A1A', // turuncu brand / ana CTA
+    onPrimary: '#FFFFFF', // primary üstündeki metin/ikon
+    card: '#FFFFFF', // kart yüzeyi
+    border: '#E6E8EB', // ince ayraç / kenarlık
+    star: '#F5A623', // puan yıldızı
+    textTertiary: '#9096A0', // en soluk metin (ipucu, meta)
+    overlay: 'rgba(0,0,0,0.35)', // hero görsel scrim'i
+    danger: '#E5484D', // hata / yıkıcı aksiyon
   },
   dark: {
     text: '#ffffff',
@@ -21,6 +30,15 @@ export const Colors = {
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
     textSecondary: '#B0B4BA',
+    // --- Tripso eklenenler (dark) — light ile AYNI key seti olmalı ---
+    primary: '#FF8A33',
+    onPrimary: '#FFFFFF',
+    card: '#1A1B1E',
+    border: '#2A2D31',
+    star: '#FFB938',
+    textTertiary: '#7C828C',
+    overlay: 'rgba(0,0,0,0.45)',
+    danger: '#FF6369',
   },
 } as const;
 
@@ -63,3 +81,37 @@ export const Spacing = {
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;
+
+/**
+ * Köşe yarıçapı ölçeği. Kart/buton/chip yuvarlaklığında bu sabitleri kullan
+ * (sabit sayı yazma). `pill` tam yuvarlak (kapsül) içindir.
+ */
+export const Radii = {
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  pill: 999,
+} as const;
+
+/**
+ * Platforma duyarlı gölgeler. Native'de shadow/elevation, web'de boxShadow.
+ * Kullanım: `style={[styles.card, Shadows.card]}`.
+ */
+export const Shadows = {
+  card:
+    Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOpacity: 0.08,
+        shadowRadius: 12,
+        shadowOffset: { width: 0, height: 4 },
+      },
+      android: {
+        elevation: 3,
+      },
+      web: {
+        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+      },
+    }) ?? {},
+} as const;

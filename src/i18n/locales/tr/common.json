@@ -1,0 +1,18 @@
+{
+  "seeAll": "Tümünü gör",
+  "close": "Kapat",
+  "goBack": "Geri dön",
+  "tabs": {
+    "home": "Ana Sayfa",
+    "explore": "Keşfet",
+    "search": "Ara",
+    "trips": "Geziler",
+    "profile": "Profil"
+  },
+  "a11y": {
+    "clearText": "Metni temizle",
+    "showPassword": "Şifreyi göster",
+    "hidePassword": "Şifreyi gizle",
+    "goBack": "Geri dön"
+  }
+}

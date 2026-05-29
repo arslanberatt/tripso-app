@@ -1,0 +1,75 @@
+{
+  "onboarding": {
+    "discover": {
+      "title": "Don't know where to start?",
+      "subtitle": "So many options can feel overwhelming at first — let's make it simple."
+    },
+    "plan": {
+      "title": "Let Tripso plan it for you",
+      "subtitle": "Tell us your style and get a day-by-day itinerary in seconds."
+    },
+    "go": {
+      "title": "Just go and enjoy",
+      "subtitle": "Every plan, place and detail in one place — focus on the experience."
+    }
+  },
+  "destinations": {
+    "bali": {
+      "name": "Bali",
+      "description": "Lush rice terraces, volcanic mountains and spiritual temples make Bali a perfect mix of adventure and relaxation."
+    },
+    "santorini": {
+      "name": "Santorini",
+      "description": "Whitewashed villages perched on dramatic cliffs above a deep-blue caldera — the most iconic sunset in the Aegean."
+    },
+    "kyoto": {
+      "name": "Kyoto",
+      "description": "Ancient temples, bamboo groves and timeless tea houses — Kyoto is the cultural heart of Japan."
+    },
+    "maldives": {
+      "name": "Maldives",
+      "description": "Experience paradise with crystal-clear waters, white sandy beaches, and luxurious overwater bungalows."
+    }
+  },
+  "tags": {
+    "nature": "Nature",
+    "beach": "Beach",
+    "culture": "Culture",
+    "adventure": "Adventure",
+    "romantic": "Romantic",
+    "relaxing": "Relaxing",
+    "views": "Views",
+    "history": "History",
+    "city": "City",
+    "food": "Food",
+    "family": "Family",
+    "water-sports": "Water Sports"
+  },
+  "highlights": {
+    "rice-terraces": "Rice Terraces",
+    "beaches": "Beaches",
+    "temples": "Temples",
+    "local-food": "Local Food",
+    "sunsets": "Sunsets",
+    "wineries": "Wineries",
+    "caldera": "Caldera",
+    "photo-spots": "Photo Spots",
+    "bamboo-grove": "Bamboo Grove",
+    "tea-houses": "Tea Houses",
+    "easy-transit": "Easy Transit",
+    "free-wi-fi": "Free Wi-Fi",
+    "breakfast": "Breakfast",
+    "pool": "Pool",
+    "spa": "Spa"
+  },
+  "experiences": {
+    "island-hopping": { "title": "Island Hopping" },
+    "old-town-food-walk": { "title": "Old Town Food Walk" },
+    "sunset-sailing": { "title": "Sunset Sailing" },
+    "durations": {
+      "1-day": "1 day",
+      "3-hours": "3 hours",
+      "2-hours": "2 hours"
+    }
+  }
+}

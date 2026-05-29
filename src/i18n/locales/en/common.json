@@ -1,0 +1,18 @@
+{
+  "seeAll": "See all",
+  "close": "Close",
+  "goBack": "Go back",
+  "tabs": {
+    "home": "Home",
+    "explore": "Explore",
+    "search": "Search",
+    "trips": "Trips",
+    "profile": "Profile"
+  },
+  "a11y": {
+    "clearText": "Clear text",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "goBack": "Go back"
+  }
+}

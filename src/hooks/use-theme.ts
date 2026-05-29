@@ -1,14 +1,15 @@
 /**
- * Learn more about light and dark modes:
- * https://docs.expo.dev/guides/color-schemes/
+ * Aktif tema paletini döndürür.
+ *
+ * Renk şeması artık doğrudan cihazdan değil, kullanıcı tercihinden
+ * (`usePreferences`) gelir — 'system' seçiliyse cihazı izler, aksi halde
+ * kullanıcının seçtiği açık/koyu temayı uygular.
  */
 
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { usePreferences } from '@/hooks/use-preferences';
 
 export function useTheme() {
-  const scheme = useColorScheme();
-  const theme = scheme === 'unspecified' ? 'light' : scheme;
-
-  return Colors[theme];
+  const { colorScheme } = usePreferences();
+  return Colors[colorScheme];
 }

@@ -1,0 +1,75 @@
+{
+  "onboarding": {
+    "discover": {
+      "title": "Nereden başlayacağını bilmiyor musun?",
+      "subtitle": "Bunca seçenek ilk başta kafa karıştırıcı olabilir — hadi kolaylaştıralım."
+    },
+    "plan": {
+      "title": "Bırak Tripso senin için planlasın",
+      "subtitle": "Tarzını söyle, saniyeler içinde günlük gezi planını al."
+    },
+    "go": {
+      "title": "Sadece git ve keyfini çıkar",
+      "subtitle": "Her plan, yer ve detay tek yerde — sen deneyime odaklan."
+    }
+  },
+  "destinations": {
+    "bali": {
+      "name": "Bali",
+      "description": "Yemyeşil pirinç terasları, volkanik dağlar ve ruhani tapınaklar Bali'yi macera ve huzurun mükemmel bir karışımı yapar."
+    },
+    "santorini": {
+      "name": "Santorini",
+      "description": "Derin mavi kalderanın üzerindeki sarp kayalıklara kurulu bembeyaz köyler — Ege'nin en ikonik gün batımı."
+    },
+    "kyoto": {
+      "name": "Kyoto",
+      "description": "Antik tapınaklar, bambu ormanları ve zamansız çayhaneler — Kyoto, Japonya'nın kültürel kalbidir."
+    },
+    "maldives": {
+      "name": "Maldivler",
+      "description": "Kristal berraklığında sular, bembeyaz kumlu plajlar ve lüks su üstü bungalovlarla cenneti deneyimleyin."
+    }
+  },
+  "tags": {
+    "nature": "Doğa",
+    "beach": "Plaj",
+    "culture": "Kültür",
+    "adventure": "Macera",
+    "romantic": "Romantik",
+    "relaxing": "Huzurlu",
+    "views": "Manzara",
+    "history": "Tarih",
+    "city": "Şehir",
+    "food": "Yemek",
+    "family": "Aile",
+    "water-sports": "Su Sporları"
+  },
+  "highlights": {
+    "rice-terraces": "Pirinç Terasları",
+    "beaches": "Plajlar",
+    "temples": "Tapınaklar",
+    "local-food": "Yerel Lezzetler",
+    "sunsets": "Gün Batımları",
+    "wineries": "Şaraphaneler",
+    "caldera": "Kaldera",
+    "photo-spots": "Fotoğraf Noktaları",
+    "bamboo-grove": "Bambu Ormanı",
+    "tea-houses": "Çayhaneler",
+    "easy-transit": "Kolay Ulaşım",
+    "free-wi-fi": "Ücretsiz Wi-Fi",
+    "breakfast": "Kahvaltı",
+    "pool": "Havuz",
+    "spa": "Spa"
+  },
+  "experiences": {
+    "island-hopping": { "title": "Ada Turu" },
+    "old-town-food-walk": { "title": "Eski Şehir Lezzet Turu" },
+    "sunset-sailing": { "title": "Gün Batımı Yelken Turu" },
+    "durations": {
+      "1-day": "1 gün",
+      "3-hours": "3 saat",
+      "2-hours": "2 saat"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "greeting": "Merhaba {{name}} 👋",
+  "prompt": "Nereye gitmek istersin?",
+  "searchPlaceholder": "Destinasyon ara…",
+  "search": {
+    "title": "Ara",
+    "placeholder": "Destinasyon ara…",
+    "suggestions": "Popüler destinasyonlar",
+    "resultsCount_one": "{{count}} sonuç",
+    "resultsCount_other": "{{count}} sonuç",
+    "noResultsTitle": "Sonuç yok",
+    "noResultsMessage": "“{{query}}” için bir şey bulamadık. Başka bir arama dene.",
+    "a11y": { "open": "Aramayı aç" }
+  },
+  "topDestinations": "Öne Çıkan Destinasyonlar",
+  "popularExperiences": "Popüler Deneyimler",
+  "notifications": "Bildirimler",
+  "notificationsUnread_one": "Bildirimler, {{count}} okunmamış",
+  "notificationsUnread_other": "Bildirimler, {{count}} okunmamış",
+  "photoA11y": "{{name}} fotoğrafı",
+  "categories": {
+    "all": "Tümü",
+    "adventure": "Macera",
+    "beach": "Plaj",
+    "city": "Şehir",
+    "food": "Yemek"
+  },
+  "promo": {
+    "title": "Sıradaki gezini planla",
+    "subtitle": "Tarzını söyle, sana günlük bir gezi planı hazırlayalım.",
+    "cta": "Gezi Planla"
+  },
+  "detail": {
+    "highlights": "Öne Çıkanlar",
+    "notFound": "Destinasyon bulunamadı",
+    "planCta": "Burada Gezi Planla",
+    "a11y": {
+      "addFavorite": "Favorilere ekle",
+      "removeFavorite": "Favorilerden çıkar",
+      "share": "Paylaş"
+    }
+  },
+  "comingSoon": {
+    "explore": {
+      "title": "Keşfet",
+      "message": "Destinasyon ara ve haritada yerleri keşfet. Yakında."
+    },
+    "trips": {
+      "title": "Gezilerin",
+      "message": "Planladığın ve yaklaşan tüm geziler burada olacak. Yakında."
+    },
+    "profile": {
+      "title": "Profil",
+      "message": "Seyahat tercihlerini ve hesabını buradan yönet. Yakında."
+    }
+  },
+  "trip": {
+    "title": "Gezi Planla",
+    "message": "Tarih, bütçe ve yolcuları seç — Tripso planı hazırlasın. Yakında.",
+    "prefill": "Önceden seçilen destinasyon: {{place}}"
+  },
+  "profile": {
+    "title": "Profil",
+    "nameLabel": "Görünen ad",
+    "namePlaceholder": "Adın",
+    "preferences": "Tercihler",
+    "language": "Dil",
+    "theme": "Görünüm",
+    "account": "Hesap",
+    "languageOptions": {
+      "system": "Sistem",
+      "en": "English",
+      "tr": "Türkçe"
+    },
+    "themeOptions": {
+      "system": "Sistem",
+      "light": "Açık",
+      "dark": "Koyu"
+    },
+    "replayOnboarding": "Tanıtımı tekrar gör",
+    "replayOnboardingHint": "Uygulamayı bir dahaki açışında karşılama turunu yeniden görürsün.",
+    "signOut": "Çıkış yap"
+  }
+}

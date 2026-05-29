@@ -1,0 +1,9 @@
+{
+  "footer": {
+    "getStarted": "Get Started",
+    "next": "Next",
+    "skip": "Skip",
+    "skipA11y": "Skip onboarding",
+    "backA11y": "Previous slide"
+  }
+}
