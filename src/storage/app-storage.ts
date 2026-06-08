@@ -106,6 +106,49 @@ export async function setDisplayName(value: string | null): Promise<void> {
   }
 }
 
+/** Son aramalar — en fazla bu kadar terim tutulur (en yeni başta). */
+const RECENT_SEARCHES_LIMIT = 8;
+
+/** Kayıtlı son aramaları okur (bozuk JSON → boş dizi). */
+export async function getRecentSearches(): Promise<string[]> {
+  const raw = await AsyncStorage.getItem(StorageKeys.RECENT_SEARCHES);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === 'string') : [];
+  } catch {
+    await AsyncStorage.removeItem(StorageKeys.RECENT_SEARCHES);
+    return [];
+  }
+}
+
+/**
+ * Bir aramayı geçmişe ekler: kırpar, boşsa atlar, aynısını (büyük/küçük harf
+ * duyarsız) başa taşır, listeyi limite kırpar. Güncel listeyi döner.
+ */
+export async function addRecentSearch(term: string): Promise<string[]> {
+  const trimmed = term.trim();
+  if (!trimmed) return getRecentSearches();
+  const current = await getRecentSearches();
+  const deduped = current.filter((t) => t.toLowerCase() !== trimmed.toLowerCase());
+  const next = [trimmed, ...deduped].slice(0, RECENT_SEARCHES_LIMIT);
+  await AsyncStorage.setItem(StorageKeys.RECENT_SEARCHES, JSON.stringify(next));
+  return next;
+}
+
+/** Tek bir aramayı geçmişten siler; güncel listeyi döner. */
+export async function removeRecentSearch(term: string): Promise<string[]> {
+  const current = await getRecentSearches();
+  const next = current.filter((t) => t.toLowerCase() !== term.toLowerCase());
+  await AsyncStorage.setItem(StorageKeys.RECENT_SEARCHES, JSON.stringify(next));
+  return next;
+}
+
+/** Tüm arama geçmişini temizler. */
+export async function clearRecentSearches(): Promise<void> {
+  await AsyncStorage.removeItem(StorageKeys.RECENT_SEARCHES);
+}
+
 /**
  * Boot'ta iki bayrağı tek turda okur (çift okuma/flicker'ı önler).
  * `multiGet` AsyncStorage'da tek IO turu yapar.

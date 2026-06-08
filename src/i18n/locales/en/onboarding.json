@@ -2,6 +2,7 @@
   "footer": {
     "getStarted": "Get Started",
     "next": "Next",
+    "back": "Back",
     "skip": "Skip",
     "skipA11y": "Skip onboarding",
     "backA11y": "Previous slide"

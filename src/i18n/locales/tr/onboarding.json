@@ -1,7 +1,8 @@
 {
   "footer": {
     "getStarted": "Başla",
-    "next": "İleri",
+    "next": "Sonraki",
+    "back": "Geri",
     "skip": "Atla",
     "skipA11y": "Tanıtımı atla",
     "backA11y": "Önceki slayt"

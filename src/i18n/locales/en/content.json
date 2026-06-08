@@ -1,16 +1,16 @@
 {
   "onboarding": {
     "discover": {
-      "title": "Don't know where to start?",
-      "subtitle": "So many options can feel overwhelming at first — let's make it simple."
+      "title": "So many roads, so many choices...",
+      "subtitle": "It's hard to know which step to take first."
     },
     "plan": {
-      "title": "Let Tripso plan it for you",
-      "subtitle": "Tell us your style and get a day-by-day itinerary in seconds."
+      "title": "Let's bring it all together",
+      "subtitle": "Flights, hotels, places to see — no scattered tabs, just one plan."
     },
     "go": {
-      "title": "Just go and enjoy",
-      "subtitle": "Every plan, place and detail in one place — focus on the experience."
+      "title": "Let Tripso handle the rest",
+      "subtitle": "We'll map out the right route — you just hit the road."
     }
   },
   "destinations": {

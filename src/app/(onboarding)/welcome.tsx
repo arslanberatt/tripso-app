@@ -19,8 +19,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { OnboardingFooter } from '@/components/onboarding/onboarding-footer';
 import { OnboardingSlide } from '@/components/onboarding/onboarding-slide';
-import { Colors, Spacing } from '@/constants/theme';
+import { Spacing } from '@/constants/theme';
 import { useAppBootstrap } from '@/hooks/use-app-bootstrap';
+import { useTheme } from '@/hooks/use-theme';
 import { ONBOARDING_SLIDES } from '@/mocks/onboarding';
 
 /**
@@ -37,6 +38,7 @@ export default function WelcomeScreen() {
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const theme = useTheme();
   const { completeOnboarding } = useAppBootstrap();
   const slides = ONBOARDING_SLIDES;
 
@@ -76,7 +78,7 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       {/* Sağ üst: Atla (son slaytta gizli). */}
       <View style={[styles.topBar, { paddingTop: insets.top + Spacing.two }]} pointerEvents="box-none">
         {!isLast && (
@@ -86,7 +88,7 @@ export default function WelcomeScreen() {
             hitSlop={8}
             onPress={() => void finish()}
           >
-            <ThemedText type="small" style={styles.skip}>
+            <ThemedText type="small" style={[styles.skip, { color: theme.textSecondary }]}>
               {t('onboarding:footer.skip')}
             </ThemedText>
           </Pressable>
@@ -122,7 +124,7 @@ export default function WelcomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF' },
+  container: { flex: 1 },
   topBar: {
     position: 'absolute',
     top: 0,
@@ -132,6 +134,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.four,
     alignItems: 'flex-end',
   },
-  skip: { color: Colors.light.textSecondary, fontWeight: '700' },
+  skip: { fontWeight: '700' },
   footer: { position: 'absolute', left: 0, right: 0, bottom: 0 },
 });

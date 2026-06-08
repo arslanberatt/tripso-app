@@ -6,11 +6,19 @@
     "title": "Ara",
     "placeholder": "Destinasyon ara…",
     "suggestions": "Popüler destinasyonlar",
+    "recent": "Son aramalar",
+    "clear": "Temizle",
+    "browse": "İlgi alanına göre keşfet",
     "resultsCount_one": "{{count}} sonuç",
     "resultsCount_other": "{{count}} sonuç",
     "noResultsTitle": "Sonuç yok",
     "noResultsMessage": "“{{query}}” için bir şey bulamadık. Başka bir arama dene.",
-    "a11y": { "open": "Aramayı aç" }
+    "a11y": {
+      "open": "Aramayı aç",
+      "removeRecent": "{{term}} aramasını geçmişten kaldır",
+      "clearRecent": "Arama geçmişini temizle",
+      "applySearch": "{{term}} için ara"
+    }
   },
   "topDestinations": "Öne Çıkan Destinasyonlar",
   "popularExperiences": "Popüler Deneyimler",
@@ -60,7 +68,17 @@
     "prefill": "Önceden seçilen destinasyon: {{place}}"
   },
   "profile": {
-    "title": "Profil",
+    "title": "Ayarlar",
+    "subtitle": "Hesabını yönet",
+    "search": "Ara",
+    "security": "Güvenlik",
+    "notifications": "Bildirim Tercihleri",
+    "faceId": "Face ID Kimlik Doğrulama",
+    "darkMode": "Karanlık Mod",
+    "logout": "Çıkış Yap",
+    "identityA11y": "Profili düzenle",
+    "qrA11y": "QR kodu göster",
+    "languageSheetTitle": "Dil",
     "nameLabel": "Görünen ad",
     "namePlaceholder": "Adın",
     "preferences": "Tercihler",

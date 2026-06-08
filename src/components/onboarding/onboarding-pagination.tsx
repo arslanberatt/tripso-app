@@ -9,16 +9,9 @@ import Animated, {
 import { Radii } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
-/**
- * OnboardingPagination — aktif sayfayı gösteren noktalar.
- * Aktif nokta `scrollX`'e göre genişler/parlar (`useAnimatedStyle` + `interpolate`).
- * Animasyon component içinde kapsüllü; ekran sadece `scrollX` paylaşır.
- */
 export type OnboardingPaginationProps = {
   count: number;
-  /** Yatay scroll offset'i (paylaşılan değer). */
   scrollX: SharedValue<number>;
-  /** Nokta rengi (verilmezse temadan). Beyaz onboarding zemini için primary geçilir. */
   color?: string;
 };
 
@@ -35,7 +28,6 @@ export function OnboardingPagination({ count, scrollX, color }: OnboardingPagina
 function Dot({ index, scrollX, color }: { index: number; scrollX: SharedValue<number>; color?: string }) {
   const theme = useTheme();
   const { width } = useWindowDimensions();
-
   const style = useAnimatedStyle(() => {
     const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
     return {

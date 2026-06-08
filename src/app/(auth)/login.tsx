@@ -6,22 +6,16 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
+import { ExternalLink } from '@/components/external-link';
 import { SocialAuth } from '@/components/auth/social-auth';
 import { AppButton } from '@/components/ui/button';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { FeatureFlags } from '@/config/feature-flags';
 import { useAuth } from '@/hooks/data/use-auth';
 
-/**
- * Login landing (`/login`) — tam ekran ilham görseli + alttan koyu degrade + giriş.
- *
- * Birincil giriş: Google + Apple (iOS'ta ikisi, Android/web'de Google) —
- * `SocialAuth` platform dosya ayrımıyla. E-posta/şifre akışı varsayılan KAPALI;
- * yalnız `FeatureFlags.authEmailEnabled` (=> `.env`) açıkken "E-posta ile devam
- * et" butonu görünür ve `/email-sign-in`'e gider. Başarılı girişte tabs'a.
- *
- * Görsel: `assets/images/auth/auth.webp` (yerel asset, expo-image ile).
- */
+const TERMS_URL = 'https://tripso.app/terms';
+const PRIVACY_URL = 'https://tripso.app/privacy';
+
 export default function LoginScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -59,17 +53,10 @@ export default function LoginScreen() {
           { paddingTop: insets.top + Spacing.four, paddingBottom: insets.bottom + Spacing.four },
         ]}
       >
-        <View style={styles.brand}>
-          <ThemedText type="h1" themeColor="onPrimary" style={styles.brandText}>
-            {t('auth:landing.brand')}
-          </ThemedText>
-        </View>
-
+        {/* Brand kaldırıldı; panel'in eski konumunu koruması için yer tutucu. */}
+        <View style={styles.brand} />
+          
         <View style={styles.panel}>
-          <ThemedText type="h2" themeColor="onPrimary" style={styles.tagline}>
-            {t('auth:landing.tagline')}
-          </ThemedText>
-
           <SocialAuth onGoogle={onGoogle} onApple={onApple} loading={isSubmitting} />
 
           {FeatureFlags.authEmailEnabled && (
@@ -83,7 +70,15 @@ export default function LoginScreen() {
           )}
 
           <ThemedText type="caption" themeColor="onPrimary" style={styles.terms}>
-            {t('auth:landing.terms')}
+            {t('auth:landing.termsPrefix')}
+            <ExternalLink href={TERMS_URL} style={styles.termsLink}>
+              {t('auth:landing.termsLink')}
+            </ExternalLink>
+            {t('auth:landing.termsConjunction')}
+            <ExternalLink href={PRIVACY_URL} style={styles.termsLink}>
+              {t('auth:landing.privacyLink')}
+            </ExternalLink>
+            {t('auth:landing.termsSuffix')}
           </ThemedText>
         </View>
       </View>
@@ -101,9 +96,9 @@ const styles = StyleSheet.create({
     maxWidth: MaxContentWidth,
     alignSelf: 'center',
   },
-  brand: { alignItems: 'center', paddingTop: Spacing.five },
-  brandText: { fontSize: 40, fontWeight: '800', letterSpacing: 0.5 },
+  // Eski brand bloğunun kapladığı dikey alanı korur (üst boşluk + başlık satırı).
+  brand: { height: Spacing.five + 48 },
   panel: { gap: Spacing.three },
-  tagline: { textAlign: 'center', marginBottom: Spacing.one },
   terms: { textAlign: 'center', opacity: 0.8 },
+  termsLink: { color: '#FFFFFF', fontWeight: '700', textDecorationLine: 'underline' },
 });

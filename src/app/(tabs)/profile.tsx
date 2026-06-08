@@ -1,53 +1,63 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/avatar';
-import { AppButton } from '@/components/ui/button';
-import { Header } from '@/components/ui/header';
+import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
+import { IconButton } from '@/components/ui/icon-button';
 import { AppInput } from '@/components/ui/input';
-import { SegmentedControl } from '@/components/ui/segmented-control';
+import { LanguageSheet } from '@/components/ui/language-sheet';
+import { SettingsGroup } from '@/components/ui/settings-group';
+import { SettingsRow } from '@/components/ui/settings-row';
 import { BottomTabInset, Radii, Spacing } from '@/constants/theme';
 import { useAppBootstrap } from '@/hooks/use-app-bootstrap';
 import { useProfile } from '@/hooks/data/use-profile';
 import { usePreferences } from '@/hooks/use-preferences';
 import { useTheme } from '@/hooks/use-theme';
-import type { LanguagePreference, ThemePreference } from '@/storage/app-storage';
+import type { LanguagePreference } from '@/storage/app-storage';
 
 /**
- * Profile (`/profile`) — gerçek profil ekranı.
+ * Profile (`/profile`) — "Ayarlar" ekranı (gruplu kart düzeni).
  *
- * Profil verisi `useProfile()` mock'undan (avatar + e-posta). Görünen ad, dil ve
- * tema tercihleri `usePreferences()` üzerinden okunur/yazılır (kalıcı + anında
- * uygulanır). "Tanıtımı tekrar gör" onboarding bayrağını sıfırlar + oturumu
- * kapatır (Bug A: Google girişi onboarding'i atlıyordu → buradan yeniden oynatılır).
+ * Kimlik + ID kartları üstte; ardından gezinme (Güvenlik, Bildirimler, Dil),
+ * toggle'lar (Face ID, Karanlık Mod) ve hesap aksiyonları (tanıtımı tekrar gör,
+ * çıkış) gruplu kartlarda. Dil seçimi alttan açılan `LanguageSheet` ile.
  *
- * TODO(api): ad değişimi PATCH /users/me/profile ile sunucuya da yazılacak.
+ * Tema/dil tercihleri `usePreferences()` üzerinden kalıcı + anında uygulanır.
+ * Karanlık Mod satırına UZUN basınca tema 'system'e döner.
+ *
+ * TODO(api): Güvenlik / Bildirim Tercihleri ekranları + Face ID gerçek auth.
  */
 export default function ProfileScreen() {
   const { t } = useTranslation();
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const { data } = useProfile();
   const { user } = data;
-  const {
-    displayName,
-    setDisplayName,
-    language,
-    setLanguage,
-    themePreference,
-    setThemePreference,
-  } = usePreferences();
+  const { displayName, language, setLanguage, colorScheme, setThemePreference } = usePreferences();
   const { signOut, resetOnboarding } = useAppBootstrap();
 
-  // Ad alanı yerel state'te tutulur; blur/temizle'de kalıcı yazılır.
-  const [name, setName] = useState(displayName ?? user.name);
+  const name = displayName ?? user.name;
 
-  const persistName = () => {
-    void setDisplayName(name);
+  // Sadece görsel/yerel state (kalıcı değil; gerçek auth'a bağlı değil).
+  const [query, setQuery] = useState('');
+  const [faceId, setFaceId] = useState(true);
+  const [sheetVisible, setSheetVisible] = useState(false);
+
+  const currentLanguageLabel = t(`home:profile.languageOptions.${language}`);
+
+  const toggleDarkMode = () => {
+    void setThemePreference(colorScheme === 'dark' ? 'light' : 'dark');
+  };
+
+  const handleSelectLanguage = (value: LanguagePreference) => {
+    void setLanguage(value);
+    setSheetVisible(false);
   };
 
   const handleSignOut = () => {
@@ -65,127 +75,189 @@ export default function ProfileScreen() {
     })();
   };
 
-  const languageOptions: { value: LanguagePreference; label: string }[] = [
-    { value: 'system', label: t('home:profile.languageOptions.system') },
-    { value: 'en', label: t('home:profile.languageOptions.en') },
-    { value: 'tr', label: t('home:profile.languageOptions.tr') },
-  ];
-
-  const themeOptions: { value: ThemePreference; label: string }[] = [
-    { value: 'system', label: t('home:profile.themeOptions.system') },
-    { value: 'light', label: t('home:profile.themeOptions.light') },
-    { value: 'dark', label: t('home:profile.themeOptions.dark') },
-  ];
+  const trackColor = { true: theme.primary, false: theme.border };
 
   return (
-    <ThemedView style={styles.fill}>
-      <Header title={t('home:profile.title')} />
-
+    <ThemedView type="backgroundElement" style={styles.fill}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
+        contentContainerStyle={[styles.content, { paddingTop: insets.top + Spacing.three }]}
       >
-        {/* Kimlik kartı */}
-        <View style={styles.identity}>
-          <Avatar uri={user.avatarUrl} name={name} size={72} />
-          <ThemedText type="h2">{name}</ThemedText>
+        {/* Başlık */}
+        <View style={styles.titleBlock}>
+          <ThemedText type="h1">{t('home:profile.title')}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
-            {user.email}
+            {t('home:profile.subtitle')}
           </ThemedText>
         </View>
 
-        {/* Görünen ad */}
-        <View style={styles.field}>
-          <ThemedText type="caption" themeColor="textSecondary" style={styles.label}>
-            {t('home:profile.nameLabel')}
-          </ThemedText>
+        {/* Arama (görsel; filtre TODO) — kart zeminli, ekrandan ayrışır */}
+        <Card radius={Radii.pill}>
           <AppInput
-            leadingIcon="person-outline"
-            value={name}
-            onChangeText={setName}
-            onBlur={persistName}
-            onEndEditing={persistName}
+            leadingIcon="search"
+            placeholder={t('home:profile.search')}
+            value={query}
+            onChangeText={setQuery}
             clearable
-            placeholder={t('home:profile.namePlaceholder')}
-            autoCapitalize="words"
-            returnKeyType="done"
+            returnKeyType="search"
+            containerStyle={styles.search}
           />
-        </View>
+        </Card>
 
-        {/* Tercihler */}
-        <ThemedText type="caption" themeColor="textSecondary" style={styles.section}>
-          {t('home:profile.preferences')}
-        </ThemedText>
+        {/* Kimlik kartı */}
+        <Card radius={Radii.lg}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t('home:profile.identityA11y')}
+            onPress={() => {
+              /* TODO(api): profil düzenleme ekranı */
+            }}
+            style={({ pressed }) => [styles.identity, { opacity: pressed ? 0.6 : 1 }]}
+          >
+            <Avatar uri={user.avatarUrl} name={name} size={48} />
+            <View style={styles.identityText}>
+              <ThemedText type="h3" numberOfLines={1}>
+                {name}
+              </ThemedText>
+              <View style={styles.emailRow}>
+                <Icon name="mail-outline" size={14} themeColor="textSecondary" />
+                <ThemedText type="caption" themeColor="textSecondary" numberOfLines={1}>
+                  {user.email}
+                </ThemedText>
+              </View>
+            </View>
+            <Icon name="chevron-forward" size={18} themeColor="textTertiary" />
+          </Pressable>
+        </Card>
 
-        <View style={styles.field}>
-          <ThemedText type="small" style={styles.label}>
-            {t('home:profile.language')}
-          </ThemedText>
-          <SegmentedControl options={languageOptions} value={language} onChange={setLanguage} />
-        </View>
-
-        <View style={styles.field}>
-          <ThemedText type="small" style={styles.label}>
-            {t('home:profile.theme')}
-          </ThemedText>
-          <SegmentedControl
-            options={themeOptions}
-            value={themePreference}
-            onChange={setThemePreference}
-          />
-        </View>
-
-        {/* Hesap */}
-        <ThemedText type="caption" themeColor="textSecondary" style={styles.section}>
-          {t('home:profile.account')}
-        </ThemedText>
-
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={t('home:profile.replayOnboarding')}
-          onPress={handleReplayOnboarding}
-          style={({ pressed }) => [
-            styles.row,
-            { backgroundColor: theme.backgroundElement, borderRadius: Radii.md, opacity: pressed ? 0.85 : 1 },
-          ]}
-        >
-          <Icon name="refresh-outline" size={22} themeColor="text" />
-          <View style={styles.rowText}>
-            <ThemedText type="small" style={styles.rowTitle}>
-              {t('home:profile.replayOnboarding')}
+        {/* ID / QR */}
+        <Card radius={Radii.lg}>
+          <View style={styles.idRow}>
+            <Icon name="card-outline" size={22} themeColor="text" />
+            <ThemedText type="small" themeColor="textSecondary" style={styles.idText}>
+              {shortenId(user.id)}
             </ThemedText>
-            <ThemedText type="caption" themeColor="textSecondary">
-              {t('home:profile.replayOnboardingHint')}
-            </ThemedText>
+            <IconButton icon="qr-code-outline" accessibilityLabel={t('home:profile.qrA11y')} />
           </View>
-          <Icon name="chevron-forward" size={18} themeColor="textTertiary" />
-        </Pressable>
+        </Card>
 
-        <AppButton
-          label={t('home:profile.signOut')}
-          variant="secondary"
-          leadingIcon="log-out-outline"
-          onPress={handleSignOut}
-        />
+        {/* Gezinme */}
+        <SettingsGroup>
+          <SettingsRow
+            icon="shield-checkmark-outline"
+            label={t('home:profile.security')}
+            showChevron
+            onPress={() => {
+              /* TODO(api): güvenlik ekranı */
+            }}
+          />
+          <SettingsRow
+            icon="notifications-outline"
+            label={t('home:profile.notifications')}
+            showChevron
+            onPress={() => {
+              /* TODO(api): bildirim tercihleri ekranı */
+            }}
+          />
+          <SettingsRow
+            icon="language-outline"
+            label={t('home:profile.language')}
+            value={currentLanguageLabel}
+            showChevron
+            onPress={() => setSheetVisible(true)}
+          />
+        </SettingsGroup>
+
+        {/* Toggle'lar */}
+        <SettingsGroup>
+          <SettingsRow
+            icon="scan-outline"
+            label={t('home:profile.faceId')}
+            trailing={
+              <Switch
+                value={faceId}
+                onValueChange={setFaceId}
+                trackColor={trackColor}
+                ios_backgroundColor={theme.border}
+              />
+            }
+          />
+          <SettingsRow
+            icon="moon-outline"
+            label={t('home:profile.darkMode')}
+            onPress={toggleDarkMode}
+            onLongPress={() => void setThemePreference('system')}
+            trailing={
+              <Switch
+                value={colorScheme === 'dark'}
+                onValueChange={toggleDarkMode}
+                trackColor={trackColor}
+                ios_backgroundColor={theme.border}
+              />
+            }
+          />
+        </SettingsGroup>
+
+        {/* Hesap aksiyonları */}
+        <SettingsGroup>
+          <SettingsRow
+            icon="refresh-outline"
+            label={t('home:profile.replayOnboarding')}
+            showChevron
+            onPress={handleReplayOnboarding}
+          />
+          <SettingsRow
+            icon="log-out-outline"
+            iconColor="danger"
+            labelColor="danger"
+            label={t('home:profile.logout')}
+            onPress={handleSignOut}
+          />
+        </SettingsGroup>
       </ScrollView>
+
+      <LanguageSheet
+        visible={sheetVisible}
+        value={language}
+        onSelect={handleSelectLanguage}
+        onClose={() => setSheetVisible(false)}
+      />
     </ThemedView>
   );
 }
 
+/** Uzun id'yi kısaltır: 111111…7777. */
+function shortenId(id: string): string {
+  return id.length > 12 ? `${id.slice(0, 6)}…${id.slice(-4)}` : id;
+}
+
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  content: { paddingHorizontal: Spacing.three, paddingBottom: BottomTabInset + Spacing.four, gap: Spacing.three },
-  identity: { alignItems: 'center', gap: Spacing.one, paddingVertical: Spacing.three },
-  field: { gap: Spacing.one },
-  label: { fontWeight: '600' },
-  section: { marginTop: Spacing.two, textTransform: 'uppercase', letterSpacing: 0.5 },
-  row: {
+  content: {
+    paddingHorizontal: Spacing.three,
+    paddingBottom: BottomTabInset + Spacing.four,
+    gap: Spacing.three,
+  },
+  titleBlock: { gap: Spacing.half },
+  // Card kendi zemin + köşesini verir; input zemini şeffaf kalsın.
+  search: { backgroundColor: 'transparent', paddingHorizontal: Spacing.four },
+  identity: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.three,
+    padding: Spacing.three,
+  },
+  identityText: { flex: 1, gap: Spacing.half },
+  emailRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
+  idRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.two,
-    padding: Spacing.three,
+    paddingVertical: Spacing.two,
+    paddingLeft: Spacing.three,
+    paddingRight: Spacing.two,
+    minHeight: 52,
   },
-  rowText: { flex: 1, gap: 2 },
-  rowTitle: { fontWeight: '600' },
+  idText: { flex: 1 },
 });

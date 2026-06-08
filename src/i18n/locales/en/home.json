@@ -6,11 +6,19 @@
     "title": "Search",
     "placeholder": "Search destinations…",
     "suggestions": "Popular destinations",
+    "recent": "Recent searches",
+    "clear": "Clear",
+    "browse": "Browse by interest",
     "resultsCount_one": "{{count}} result",
     "resultsCount_other": "{{count}} results",
     "noResultsTitle": "No results",
     "noResultsMessage": "We couldn't find anything for “{{query}}”. Try another search.",
-    "a11y": { "open": "Open search" }
+    "a11y": {
+      "open": "Open search",
+      "removeRecent": "Remove {{term}} from recent searches",
+      "clearRecent": "Clear recent searches",
+      "applySearch": "Search for {{term}}"
+    }
   },
   "topDestinations": "Top Destinations",
   "popularExperiences": "Popular Experiences",
@@ -60,7 +68,17 @@
     "prefill": "Prefilled destination: {{place}}"
   },
   "profile": {
-    "title": "Profile",
+    "title": "Settings",
+    "subtitle": "Manage your account",
+    "search": "Search",
+    "security": "Security",
+    "notifications": "Notification Preferences",
+    "faceId": "Use Face ID Authentication",
+    "darkMode": "Dark Mode",
+    "logout": "Logout",
+    "identityA11y": "Edit profile",
+    "qrA11y": "Show QR code",
+    "languageSheetTitle": "Language",
     "nameLabel": "Display name",
     "namePlaceholder": "Your name",
     "preferences": "Preferences",

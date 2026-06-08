@@ -1,16 +1,16 @@
 {
   "onboarding": {
     "discover": {
-      "title": "Nereden başlayacağını bilmiyor musun?",
-      "subtitle": "Bunca seçenek ilk başta kafa karıştırıcı olabilir — hadi kolaylaştıralım."
+      "title": "Birçok yol, birçok seçenek...",
+      "subtitle": "Hangi adıma önce gideceğinizi bilemeyebilirsiniz."
     },
     "plan": {
-      "title": "Bırak Tripso senin için planlasın",
-      "subtitle": "Tarzını söyle, saniyeler içinde günlük gezi planını al."
+      "title": "Hepsini bir araya getirelim",
+      "subtitle": "Uçuş, otel, gezilecek yerler — dağınık sekmeler yok, tek bir plan var."
     },
     "go": {
-      "title": "Sadece git ve keyfini çıkar",
-      "subtitle": "Her plan, yer ve detay tek yerde — sen deneyime odaklan."
+      "title": "Gerisini Tripso halletsin",
+      "subtitle": "Sana uygun rotayı hazırlayalım, sen sadece yola çık."
     }
   },
   "destinations": {

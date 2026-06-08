@@ -36,6 +36,8 @@ export default function RootLayout() {
                 <Stack.Screen name="(tabs)" />
                 <Stack.Screen name="(onboarding)" />
                 <Stack.Screen name="(auth)" />
+                {/* Arama: tabs üstünde tam ekran stack screen (tüm platformlar). */}
+                <Stack.Screen name="search" />
                 {/* Detay: tabs üstünde tam ekran stack screen. */}
                 <Stack.Screen name="destination/[id]" />
                 {/* Plan a Trip akışı (stub) — modal sunum. */}

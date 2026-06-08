@@ -1,17 +1,12 @@
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View, useWindowDimensions, type ImageSourcePropType } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
-import { Colors, Spacing } from '@/constants/theme';
+import { Spacing } from '@/constants/theme';
+import { useTheme } from '@/hooks/use-theme';
 
-/**
- * OnboardingSlide — beyaz zeminli tek tanıtım sayfası.
- *
- * Üstte karakter görseli (`contain`, kırpılmaz), altta ilerleyen başlık + açıklama.
- * Genişlik ekran genişliğine sabitlenir (yatay paged scroll'da her slayt bir
- * sayfa). Tema fark etmeksizin beyaz zemin + koyu metin (görseller beyaz fonlu).
- */
 export type OnboardingSlideData = {
   key: string;
   title: string;
@@ -19,32 +14,36 @@ export type OnboardingSlideData = {
   image: ImageSourcePropType;
 };
 
+// Footer (noktalar + Sonraki) için altta bırakılan pay; absolute metin bunun üstünde durur.
+const FOOTER_RESERVE = 120;
+
 export function OnboardingSlide({ slide }: { slide: OnboardingSlideData }) {
   const { width, height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const theme = useTheme();
   const { t } = useTranslation();
 
-  // Slayt metni i18n'den çözülür; mock İngilizce metin defaultValue (fallback).
   const title = t(`content:onboarding.${slide.key}.title`, { defaultValue: slide.title });
   const subtitle = t(`content:onboarding.${slide.key}.subtitle`, {
     defaultValue: slide.subtitle,
   });
 
+
   return (
-    <View style={[styles.slide, { width, height }]}>
-      <View style={styles.imageWrap}>
-        <Image
-          source={slide.image}
-          style={styles.image}
-          contentFit="contain"
-          transition={250}
-          accessibilityLabel={title}
-        />
-      </View>
-      <View style={styles.content}>
-        <ThemedText type="h1" style={styles.title}>
+    <View style={[styles.slide, { width }]}>
+      <Image
+        source={slide.image}
+        style={{ width: '100%', height: "100%", marginTop:  - Spacing.five }}
+        contentFit="contain"
+        transition={250}
+        accessibilityLabel={title}
+      />
+
+      <View style={[styles.content, { bottom: FOOTER_RESERVE + insets.bottom }]}>
+        <ThemedText type="h1" style={[styles.title, { color: theme.text }]}>
           {title}
         </ThemedText>
-        <ThemedText type="default" style={styles.subtitle}>
+        <ThemedText type="default" style={[styles.subtitle, { color: theme.textSecondary }]}>
           {subtitle}
         </ThemedText>
       </View>
@@ -53,15 +52,15 @@ export function OnboardingSlide({ slide }: { slide: OnboardingSlideData }) {
 }
 
 const styles = StyleSheet.create({
-  slide: { flex: 1, backgroundColor: '#FFFFFF' },
-  imageWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingTop: Spacing.six },
-  image: { width: '100%', height: '100%' },
+  slide: { flex: 1, alignItems: 'center', justifyContent: 'flex-start' },
   content: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
     paddingHorizontal: Spacing.four,
-    // Footer (dots + Next + back) alta sabit; metni onun üstünde tutacak boşluk.
-    paddingBottom: 220,
     gap: Spacing.two,
+    alignItems: 'center',
   },
-  title: { color: Colors.light.text, fontSize: 28, lineHeight: 34 },
-  subtitle: { color: Colors.light.textSecondary, lineHeight: 22 },
+  title: { fontSize: 26, lineHeight: 32, fontWeight: '600', textAlign: 'center' },
+  subtitle: { lineHeight: 22, textAlign: 'center' },
 });

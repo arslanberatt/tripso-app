@@ -14,4 +14,6 @@ export const StorageKeys = {
   THEME: '@tripso/theme',
   /** Profilde girilen görünen ad (mock; API gelince /users/me'den gelecek). */
   DISPLAY_NAME: '@tripso/display-name',
+  /** Arama ekranındaki son aramalar (JSON string dizisi, en yeni başta). */
+  RECENT_SEARCHES: '@tripso/recent-searches',
 } as const;

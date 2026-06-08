@@ -2,7 +2,6 @@ import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useTranslation } from 'react-i18next';
 
 import { Colors } from '@/constants/theme';
-import { useGlassCapability } from '@/hooks/use-glass-capability';
 import { usePreferences } from '@/hooks/use-preferences';
 
 /**
@@ -19,7 +18,6 @@ import { usePreferences } from '@/hooks/use-preferences';
 export default function TabsLayout() {
   const { colorScheme } = usePreferences();
   const colors = Colors[colorScheme];
-  const { isLiquidGlass } = useGlassCapability();
   const { t } = useTranslation();
 
   return (
@@ -45,16 +43,10 @@ export default function TabsLayout() {
       </NativeTabs.Trigger>
 
       {/*
-       * Arama sekmesi — iOS 26'da `role="search"` ile native arama rolünü kullanır
-       * (Liquid Glass tab bar'da özel arama görünümü). iOS 18 ve Android'de sekme
-       * GİZLİ (`hidden`); o platformlarda arama, Home'daki arama çubuğuna dokununca
-       * `/search`'e push ile açılır. Her iki yol da aynı `/search` ekranına gider.
+       * Arama ayrı bir sekme DEĞİL: kök `/search` route'u olarak tabs üstünde açılır
+       * (bkz. `app/search.tsx`). Home'daki arama çubuğuna dokununca `router.push`
+       * ile gelir — web/iOS/Android tutarlı. (Gizli sekmeye push web'de çalışmıyordu.)
        */}
-      <NativeTabs.Trigger name="search" role="search" hidden={!isLiquidGlass}>
-        <NativeTabs.Trigger.Label>{t('common:tabs.search')}</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf="magnifyingglass" drawable="ic_menu_search" />
-      </NativeTabs.Trigger>
-
       <NativeTabs.Trigger name="trips">
         <NativeTabs.Trigger.Label>{t('common:tabs.trips')}</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="airplane" drawable="ic_menu_send" />
