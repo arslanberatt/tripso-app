@@ -38,6 +38,29 @@
     "subtitle": "Tarzını söyle, sana günlük bir gezi planı hazırlayalım.",
     "cta": "Gezi Planla"
   },
+  "explore": {
+    "heading": "Sıradaki maceralarını planlayalım!",
+    "promptPlaceholder": "Bana buradan sor..",
+    "createCta": "AI ile oluştur",
+    "hint": "Hayalindeki destinasyonu yaz, planı biz hallederiz",
+    "tabs": {
+      "myPlan": "Planım",
+      "explore": "Keşfet"
+    },
+    "filters": {
+      "allPlans": "Tüm Planlar",
+      "active": "Aktif"
+    },
+    "card": {
+      "avg": "{{amount}} ort.",
+      "places_one": "{{count}} yer",
+      "places_other": "{{count}} yer"
+    },
+    "a11y": {
+      "openPrompt": "Gezi planlayıcıyı aç",
+      "mic": "Sesli giriş"
+    }
+  },
   "detail": {
     "highlights": "Öne Çıkanlar",
     "notFound": "Destinasyon bulunamadı",

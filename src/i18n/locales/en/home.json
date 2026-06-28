@@ -38,6 +38,29 @@
     "subtitle": "Tell us your style and get a day-by-day itinerary.",
     "cta": "Plan a Trip"
   },
+  "explore": {
+    "heading": "Let's plan your next adventures!",
+    "promptPlaceholder": "Ask me here..",
+    "createCta": "Create with AI",
+    "hint": "Just type your dream destination, we'll handle the plan",
+    "tabs": {
+      "myPlan": "My Plan",
+      "explore": "Explore"
+    },
+    "filters": {
+      "allPlans": "All Plans",
+      "active": "Active"
+    },
+    "card": {
+      "avg": "{{amount}} avg",
+      "places_one": "{{count}} place",
+      "places_other": "{{count}} places"
+    },
+    "a11y": {
+      "openPrompt": "Open trip planner",
+      "mic": "Voice input"
+    }
+  },
   "detail": {
     "highlights": "Highlights",
     "notFound": "Destination not found",
