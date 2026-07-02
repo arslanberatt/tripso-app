@@ -40,8 +40,21 @@ export default function RootLayout() {
                 <Stack.Screen name="search" />
                 {/* Detay: tabs üstünde tam ekran stack screen. */}
                 <Stack.Screen name="destination/[id]" />
-                {/* Plan a Trip akışı (stub) — modal sunum. */}
+                {/* Plan a Trip akışı — Trip Sihirbazı, modal sunum. */}
                 <Stack.Screen name="trip/new" options={{ presentation: 'modal' }} />
+                {/* Plan / Rota Detayı + alt akışları (bütçe, ortak plan). */}
+                <Stack.Screen name="plan/[id]/index" />
+                <Stack.Screen name="plan/[id]/budget" />
+                <Stack.Screen name="plan/[id]/collaborate" />
+                {/* Harita, gezi günlüğü ve mekân/öneri ekranları. */}
+                <Stack.Screen name="map/index" />
+                <Stack.Screen name="recommendations/[city]" />
+                <Stack.Screen name="place/[id]" />
+                <Stack.Screen name="journal/index" />
+                <Stack.Screen name="saved/index" />
+                <Stack.Screen name="notifications/index" />
+                {/* Kişiselleştirme sihirbazı — modal sunum. */}
+                <Stack.Screen name="personalize/index" options={{ presentation: 'modal' }} />
               </Stack>
             </AppBootstrapProvider>
           </ThemeProvider>

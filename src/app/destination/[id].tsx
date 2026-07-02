@@ -158,6 +158,13 @@ export default function DestinationDetailScreen() {
               <HighlightItem key={h.label} icon={h.icon} label={highlightLabel(h.label)} />
             ))}
           </View>
+
+          <AppButton
+            label={t('pages:recommendations.title')}
+            leadingIcon="people-outline"
+            variant="secondary"
+            onPress={() => router.push(`/recommendations/${encodeURIComponent(destination.cityName)}`)}
+          />
         </View>
       </Animated.ScrollView>
 

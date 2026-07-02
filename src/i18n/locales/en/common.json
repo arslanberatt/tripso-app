@@ -1,7 +1,9 @@
 {
   "seeAll": "See all",
   "close": "Close",
+  "clear": "Clear",
   "goBack": "Go back",
+  "cancel": "Cancel",
   "tabs": {
     "home": "Home",
     "explore": "Explore",

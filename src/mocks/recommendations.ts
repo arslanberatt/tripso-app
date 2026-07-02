@@ -1,0 +1,148 @@
+/**
+ * "Başkaları Ne Önerdi" — şehir bazlı topluluk önerileri (sahte veri).
+ * `placeId` `mocks/places.ts`'teki `MOCK_PLACES` ile eşleşir (mekân detayına gider).
+ */
+
+import type { CommunityRecommendation } from '@/types';
+
+export const MOCK_RECOMMENDATIONS: CommunityRecommendation[] = [
+  {
+    id: 'rec-1',
+    placeId: 'pl-paris-bar-lefooding',
+    placeName: 'Little Red Door',
+    city: 'Paris',
+    countryCode: 'FR',
+    category: 'entertainment',
+    imageUrl: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=900&q=80',
+    tripsoRating: 4.5,
+    tripsoReviewCount: 187,
+    googleRating: 4.4,
+    googleReviewCount: 3400,
+    likeCount: 76,
+    likedByMe: false,
+    savedByMe: false,
+  },
+  {
+    id: 'rec-2',
+    placeId: 'pl-paris-marais',
+    placeName: "L'As du Fallafel",
+    city: 'Paris',
+    countryCode: 'FR',
+    category: 'restaurant',
+    imageUrl: 'https://images.unsplash.com/photo-1541558869434-2840d308329a?w=900&q=80',
+    tripsoRating: 4.8,
+    tripsoReviewCount: 265,
+    googleRating: 4.5,
+    googleReviewCount: 18900,
+    likeCount: 112,
+    likedByMe: true,
+    savedByMe: true,
+  },
+  {
+    id: 'rec-3',
+    placeId: 'pl-paris-louvre',
+    placeName: 'Louvre Müzesi',
+    city: 'Paris',
+    countryCode: 'FR',
+    category: 'attraction',
+    imageUrl: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=900&q=80',
+    tripsoRating: 4.6,
+    tripsoReviewCount: 312,
+    googleRating: 4.7,
+    googleReviewCount: 248000,
+    likeCount: 205,
+    likedByMe: false,
+    savedByMe: false,
+  },
+  {
+    id: 'rec-4',
+    placeId: 'pl-paris-cafe',
+    placeName: 'Café de Flore',
+    city: 'Paris',
+    countryCode: 'FR',
+    category: 'restaurant',
+    imageUrl: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=900&q=80',
+    tripsoRating: 4.3,
+    tripsoReviewCount: 198,
+    googleRating: 4.2,
+    googleReviewCount: 22100,
+    likeCount: 54,
+    likedByMe: false,
+    savedByMe: false,
+  },
+  {
+    id: 'rec-5',
+    placeId: 'pl-paris-eiffel',
+    placeName: 'Tour Eiffel',
+    city: 'Paris',
+    countryCode: 'FR',
+    category: 'landmark',
+    imageUrl: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&q=80',
+    tripsoRating: 4.7,
+    tripsoReviewCount: 540,
+    googleRating: 4.6,
+    googleReviewCount: 412000,
+    likeCount: 301,
+    likedByMe: true,
+    savedByMe: false,
+  },
+  {
+    id: 'rec-6',
+    placeId: 'pl-rome-colosseum',
+    placeName: 'Colosseo',
+    city: 'Rome',
+    countryCode: 'IT',
+    category: 'landmark',
+    imageUrl: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=900&q=80',
+    tripsoRating: 4.6,
+    tripsoReviewCount: 421,
+    googleRating: 4.7,
+    googleReviewCount: 289000,
+    likeCount: 167,
+    likedByMe: false,
+    savedByMe: false,
+  },
+  {
+    id: 'rec-7',
+    placeId: 'pl-amsterdam-canal',
+    placeName: 'Jordaan Kanalları',
+    city: 'Amsterdam',
+    countryCode: 'NL',
+    category: 'attraction',
+    imageUrl: 'https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=900&q=80',
+    tripsoRating: 4.5,
+    tripsoReviewCount: 156,
+    googleRating: 4.6,
+    googleReviewCount: 41200,
+    likeCount: 88,
+    likedByMe: false,
+    savedByMe: false,
+  },
+  {
+    id: 'rec-8',
+    placeId: 'pl-bali-tegallalang',
+    placeName: 'Tegallalang Rice Terraces',
+    city: 'Ubud',
+    countryCode: 'ID',
+    category: 'nature',
+    imageUrl: 'https://images.unsplash.com/photo-1531592937781-344ad608fabf?w=900&q=80',
+    tripsoRating: 4.4,
+    tripsoReviewCount: 203,
+    googleRating: 4.3,
+    googleReviewCount: 15600,
+    likeCount: 71,
+    likedByMe: false,
+    savedByMe: false,
+  },
+];
+
+/** Şehir adına göre önerileri döndürür (case-insensitive; kısmi eşleşme). */
+export function getRecommendationsForCity(city: string): CommunityRecommendation[] {
+  const q = city.trim().toLowerCase();
+  return MOCK_RECOMMENDATIONS.filter((r) => r.city.toLowerCase().includes(q));
+}
+
+/** Tüm şehirlerin listesi (öneri sayfası boşsa gösterilecek kısayollar için). */
+export function getRecommendationCities(): string[] {
+  return Array.from(new Set(MOCK_RECOMMENDATIONS.map((r) => r.city)));
+}

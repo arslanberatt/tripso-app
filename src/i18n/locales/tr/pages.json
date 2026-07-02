@@ -1,0 +1,288 @@
+{
+  "category": {
+    "attraction": "Gezilecek Yer",
+    "restaurant": "Restoran",
+    "hotel": "Otel",
+    "landmark": "Simge Yapı",
+    "nature": "Doğa",
+    "entertainment": "Eğlence",
+    "other": "Diğer"
+  },
+  "budgetCategory": {
+    "accommodation": "Konaklama",
+    "food": "Yeme & İçme",
+    "activities": "Aktiviteler",
+    "transport": "Ulaşım",
+    "shopping": "Alışveriş",
+    "other": "Diğer"
+  },
+  "budgetTier": {
+    "economy": "Ekonomik",
+    "standard": "Standart",
+    "comfort": "Konfor",
+    "luxury": "Lüks"
+  },
+  "occasion": {
+    "honeymoon": "Balayı",
+    "birthday": "Doğum Günü",
+    "anniversary": "Yıldönümü",
+    "business_leisure": "İş + Tatil",
+    "family_visit": "Aile Ziyareti"
+  },
+  "dateFlexibility": {
+    "exact": "Kesin tarihler",
+    "month": "Belirli bir ay",
+    "flexible": "Esnek"
+  },
+  "wizard": {
+    "title": "Gezi Planla",
+    "step": "Adım {{current}} / {{total}}",
+    "back": "Geri",
+    "next": "İleri",
+    "create": "Planımı Oluştur",
+    "destination": {
+      "title": "Nereye gitmek istiyorsun?",
+      "subtitle": "Bir yer ara ve seç — yalnızca gerçek, doğrulanmış destinasyonlar.",
+      "placeholder": "Şehir veya ülke ara",
+      "empty": "Eşleşme yok. Başka bir arama dene.",
+      "selected": "Seçildi"
+    },
+    "dates": {
+      "title": "Ne zaman gidiyorsun?",
+      "subtitle": "Tarihlerinin ne kadar esnek olduğunu seç.",
+      "startDate": "Başlangıç tarihi",
+      "endDate": "Bitiş tarihi",
+      "datePlaceholder": "YYYY-AA-GG"
+    },
+    "budget": {
+      "title": "Bütçen ne kadar?",
+      "subtitle": "Bir konfor seviyesi seç, biliyorsan toplam tutarı da gir.",
+      "amountLabel": "Toplam bütçe (opsiyonel)",
+      "amountPlaceholder": "örn. 1500"
+    },
+    "travelers": {
+      "title": "Kimler geliyor?",
+      "subtitle": "Grubunu söyle, öneriler herkese uysun.",
+      "adults": "Yetişkin",
+      "children": "Çocuk",
+      "seniors": "Yaşlı",
+      "occasionLabel": "Özel bir sebep var mı?",
+      "occasionNone": "Sadece geziyoruz"
+    },
+    "interests": {
+      "title": "Neyle ilgileniyorsun?",
+      "subtitle": "Birkaçını seç — sanattan çok eğlence istiyorsan müzeleri gece hayatıyla değiştiririz.",
+      "notesPlaceholder": "Bilmemiz gereken başka bir şey var mı? (opsiyonel)"
+    },
+    "review": {
+      "title": "Hazırız",
+      "subtitle": "Rotanı oluşturmadan önce detayları bir kontrol et.",
+      "destinationLabel": "Destinasyon",
+      "datesLabel": "Tarihler",
+      "budgetLabel": "Bütçe",
+      "travelersLabel": "Yolcular",
+      "occasionLabel": "Sebep",
+      "interestsLabel": "İlgi Alanları"
+    },
+    "generating": {
+      "title": "Rotan oluşturuluyor…",
+      "message": "Yapay zekâmız {{city}} için bütçeni, grubunu ve ilgi alanlarını eşleştiriyor.",
+      "step1": "Tercihlerin okunuyor",
+      "step2": "{{city}}'de yerler taranıyor",
+      "step3": "Bütçen dengeleniyor",
+      "step4": "Son rötuşlar yapılıyor"
+    },
+    "validation": {
+      "destinationRequired": "Devam etmek için listeden bir destinasyon seç.",
+      "datesRequired": "Devam etmek için başlangıç ve bitiş tarihi ekle."
+    }
+  },
+  "trips": {
+    "title": "Gezilerim",
+    "subtitle": "Oluşturduğun tüm planlar tek yerde.",
+    "filters": { "all": "Tümü", "planning": "Planlanıyor", "active": "Aktif", "completed": "Tamamlandı" },
+    "empty": "Henüz gezi yok — ilk planını oluştur.",
+    "emptyCta": "Gezi Planla",
+    "card": {
+      "travelers_one": "{{count}} kişi",
+      "travelers_other": "{{count}} kişi"
+    }
+  },
+  "plan": {
+    "notFound": "Plan bulunamadı.",
+    "day": "{{number}}. Gün",
+    "viewMap": "Haritada Gör",
+    "budget": "Bütçe",
+    "collaborate": "Birlikte Planla",
+    "swap": "Bunu istemiyorum",
+    "swapped": "Alternatifle değiştirildi",
+    "addNote": "Not ekle",
+    "estimatedCost": "Tah. {{amount}}",
+    "totalEstimate": "Toplam tahmini maliyet",
+    "openPlace": "Mekânı gör",
+    "a11y": { "swap": "{{title}} için alternatif öner" }
+  },
+  "budgetScreen": {
+    "title": "Bütçe Takibi",
+    "planned": "Planlanan",
+    "spent": "Harcanan",
+    "remaining": "Kalan",
+    "byCategory": "Kategoriye göre",
+    "expenses": "Harcamalar",
+    "addExpense": "Harcama Ekle",
+    "expenseLabel": "Neye harcadın?",
+    "expenseAmount": "Tutar",
+    "expenseCategory": "Kategori",
+    "save": "Kaydet",
+    "overBudget": "Bu kategoride bütçeyi aştın.",
+    "empty": "Henüz harcama eklenmedi."
+  },
+  "collaborate": {
+    "title": "Birlikte Planla",
+    "subtitle": "Arkadaşlarını davet et, duraklara oy ver, not bırak.",
+    "invite": "Arkadaş Davet Et",
+    "inviteCopied": "Davet linki kopyalandı",
+    "collaborators": "Katılımcılar",
+    "voting": "Duraklara oy ver",
+    "comments": "Yorumlar",
+    "commentPlaceholder": "Yorum ekle…",
+    "send": "Gönder",
+    "owner": "Sahibi",
+    "editor": "Düzenleyici",
+    "generalComment": "Genel"
+  },
+  "map": {
+    "title": "Harita",
+    "subtitle": "{{count}} pinlenmiş yer",
+    "filterAll": "Tümü",
+    "myPins": "Pinlerim",
+    "legendPlan": "Plan durağı",
+    "legendVisited": "Gezildi",
+    "empty": "Gösterilecek pin yok.",
+    "nearMe": "Yakınımda ne var?"
+  },
+  "recommendations": {
+    "title": "Başkaları Ne Önerdi",
+    "subtitle": "Tripso topluluğundan {{city}}'deki en beğenilen mekânlar.",
+    "cityPickerTitle": "Şehre göre gözat",
+    "tripsoRating": "Tripso",
+    "googleRating": "Google",
+    "save": "Kaydet",
+    "saved": "Kaydedildi",
+    "like": "Beğen",
+    "empty": "Bu şehir için henüz öneri yok."
+  },
+  "place": {
+    "notFound": "Mekân bulunamadı.",
+    "openingHours": "Çalışma saatleri",
+    "address": "Adres",
+    "about": "Hakkında",
+    "reviews": "Yorumlar",
+    "addToPlan": "Planıma Ekle",
+    "addedToPlan": "Plana eklendi",
+    "getDirections": "Yol Tarifi Al",
+    "priceLevel": "Fiyat seviyesi",
+    "reviewSourceGoogle": "Google üzerinden",
+    "reviewSourceTripso": "Tripso gezgini",
+    "noReviews": "Henüz yorum yok."
+  },
+  "journal": {
+    "title": "Gezi Günlüğü",
+    "subtitle": "Check-in yaptığın her yer.",
+    "stats": {
+      "countries_one": "{{count}} ülke",
+      "countries_other": "{{count}} ülke",
+      "cities_one": "{{count}} şehir",
+      "cities_other": "{{count}} şehir",
+      "places_one": "{{count}} yer",
+      "places_other": "{{count}} yer"
+    },
+    "addPin": "Check-In Yap",
+    "addPinTitle": "Bir yere check-in yap",
+    "placeName": "Yer adı",
+    "city": "Şehir",
+    "caption": "Not (opsiyonel)",
+    "save": "Check-In'i Kaydet",
+    "empty": "Henüz check-in yok — ilk yerini pinle."
+  },
+  "personalize": {
+    "title": "Kişiselleştir",
+    "step": "Adım {{current}} / {{total}}",
+    "back": "Geri",
+    "next": "İleri",
+    "save": "Profili Kaydet",
+    "saved": "Profilin hazır!",
+    "savedMessage": "Gezi önerileri artık sana göre şekillenecek.",
+    "done": "Tamam",
+    "about": {
+      "title": "Bize kendinden bahset",
+      "subtitle": "Adın ve yaşın doğru ton ve tempoyu seçmemize yardım eder.",
+      "nameLabel": "Adın",
+      "namePlaceholder": "örn. David",
+      "ageLabel": "Yaş aralığı"
+    },
+    "ageGroup": {
+      "18_24": "18–24",
+      "25_34": "25–34",
+      "35_44": "35–44",
+      "45_54": "45–54",
+      "55_plus": "55+"
+    },
+    "tastes": {
+      "title": "Yeme & içme",
+      "subtitle": "Alkol kullanmayan birine asla şarap turu önermeyelim.",
+      "alcoholLabel": "Alkol kullanıyor musun?",
+      "dietaryLabel": "Beslenme tercihleri"
+    },
+    "alcohol": {
+      "yes": "Evet",
+      "occasional": "Ara sıra",
+      "no": "Hayır"
+    },
+    "dietary": {
+      "none": "Kısıtlama yok",
+      "vegetarian": "Vejetaryen",
+      "vegan": "Vegan",
+      "halal": "Helal",
+      "gluten_free": "Glutensiz"
+    },
+    "style": {
+      "title": "Gezi tarzın",
+      "subtitle": "Bir şehirde nasıl gezmeyi seversin?",
+      "paceLabel": "Tempo",
+      "accommodationLabel": "Konaklama"
+    },
+    "pace": {
+      "relaxed": "Sakin",
+      "balanced": "Dengeli",
+      "intense": "Yoğun"
+    },
+    "interests": {
+      "title": "İlgi alanların",
+      "subtitle": "Birkaçını seç — müzeler mi, barlar mı? Karar senin."
+    },
+    "review": {
+      "title": "Her şey hazır",
+      "subtitle": "Planlarını kişiselleştirirken bunları kullanacağız.",
+      "nameLabel": "Ad",
+      "ageLabel": "Yaş aralığı",
+      "alcoholLabel": "Alkol",
+      "dietaryLabel": "Beslenme",
+      "paceLabel": "Tempo",
+      "accommodationLabel": "Konaklama",
+      "interestsLabel": "İlgi Alanları"
+    }
+  },
+  "saved": {
+    "title": "Kaydedilenler",
+    "subtitle": "Favori yerlerinin koleksiyonları.",
+    "items_one": "{{count}} yer",
+    "items_other": "{{count}} yer",
+    "empty": "Henüz kaydedilmiş koleksiyon yok."
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "markAllRead": "Tümünü okundu işaretle",
+    "empty": "Yeni bildirimin yok."
+  }
+}

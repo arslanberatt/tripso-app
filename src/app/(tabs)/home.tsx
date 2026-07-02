@@ -46,9 +46,7 @@ export default function HomeScreen() {
         name={displayName ?? user.name}
         avatarUri={user.avatarUrl}
         unreadCount={2}
-        onPressBell={() => {
-          // TODO(nav): bildirimler ekranı (sonraki faz).
-        }}
+        onPressBell={() => router.push('/notifications')}
       />
 
       <ScrollView

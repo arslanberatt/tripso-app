@@ -110,9 +110,7 @@ export default function ProfileScreen() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={t('home:profile.identityA11y')}
-            onPress={() => {
-              /* TODO(api): profil düzenleme ekranı */
-            }}
+            onPress={() => router.push('/personalize')}
             style={({ pressed }) => [styles.identity, { opacity: pressed ? 0.6 : 1 }]}
           >
             <Avatar uri={user.avatarUrl} name={name} size={48} />
@@ -156,9 +154,7 @@ export default function ProfileScreen() {
             icon="notifications-outline"
             label={t('home:profile.notifications')}
             showChevron
-            onPress={() => {
-              /* TODO(api): bildirim tercihleri ekranı */
-            }}
+            onPress={() => router.push('/notifications')}
           />
           <SettingsRow
             icon="language-outline"
@@ -166,6 +162,28 @@ export default function ProfileScreen() {
             value={currentLanguageLabel}
             showChevron
             onPress={() => setSheetVisible(true)}
+          />
+        </SettingsGroup>
+
+        {/* Gezgin araçları */}
+        <SettingsGroup>
+          <SettingsRow
+            icon="person-circle-outline"
+            label={t('pages:personalize.title')}
+            showChevron
+            onPress={() => router.push('/personalize')}
+          />
+          <SettingsRow
+            icon="footsteps-outline"
+            label={t('pages:journal.title')}
+            showChevron
+            onPress={() => router.push('/journal')}
+          />
+          <SettingsRow
+            icon="bookmark-outline"
+            label={t('pages:saved.title')}
+            showChevron
+            onPress={() => router.push('/saved')}
           />
         </SettingsGroup>
 

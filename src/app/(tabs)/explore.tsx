@@ -7,7 +7,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Avatar } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
 import { Icon } from '@/components/ui/icon';
 import { PlanCard } from '@/components/ui/plan-card';
 import { ThumbStrip } from '@/components/ui/thumb-strip';
@@ -113,13 +112,7 @@ export default function ExploreScreen() {
         {/* Plan kartları (filtreli) */}
         <View style={[styles.padded, styles.cardList]}>
           {visiblePlans.map((p) => (
-            <PlanCard
-              key={p.id}
-              plan={p}
-              onPress={() => {
-                /* TODO(nav): plan/itinerary detay ekranı */
-              }}
-            />
+            <PlanCard key={p.id} plan={p} onPress={() => router.push(`/plan/${p.id}`)} />
           ))}
         </View>
       </ScrollView>

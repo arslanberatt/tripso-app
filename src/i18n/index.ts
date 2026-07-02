@@ -8,11 +8,13 @@ import enCommon from '@/i18n/locales/en/common.json';
 import enContent from '@/i18n/locales/en/content.json';
 import enHome from '@/i18n/locales/en/home.json';
 import enOnboarding from '@/i18n/locales/en/onboarding.json';
+import enPages from '@/i18n/locales/en/pages.json';
 import trAuth from '@/i18n/locales/tr/auth.json';
 import trCommon from '@/i18n/locales/tr/common.json';
 import trContent from '@/i18n/locales/tr/content.json';
 import trHome from '@/i18n/locales/tr/home.json';
 import trOnboarding from '@/i18n/locales/tr/onboarding.json';
+import trPages from '@/i18n/locales/tr/pages.json';
 
 /**
  * i18next kurulumu (yan-etkili import: `import '@/i18n'` ile tetiklenir).
@@ -38,6 +40,7 @@ export const resources = {
     home: enHome,
     onboarding: enOnboarding,
     content: enContent,
+    pages: enPages,
   },
   tr: {
     common: trCommon,
@@ -45,6 +48,7 @@ export const resources = {
     home: trHome,
     onboarding: trOnboarding,
     content: trContent,
+    pages: trPages,
   },
 } as const;
 
@@ -53,7 +57,7 @@ void i18n.use(initReactI18next).init({
   resources,
   lng: detectLanguage(),
   fallbackLng: FALLBACK_LANGUAGE,
-  ns: ['common', 'auth', 'home', 'onboarding', 'content'],
+  ns: ['common', 'auth', 'home', 'onboarding', 'content', 'pages'],
   defaultNS,
   interpolation: { escapeValue: false }, // RN/React zaten escape eder; {{name}} + emoji düzgün gelsin
   react: { useSuspense: false },

@@ -1,7 +1,9 @@
 {
   "seeAll": "Tümünü gör",
   "close": "Kapat",
+  "clear": "Temizle",
   "goBack": "Geri dön",
+  "cancel": "Vazgeç",
   "tabs": {
     "home": "Ana Sayfa",
     "explore": "Keşfet",

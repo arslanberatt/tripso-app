@@ -1,0 +1,288 @@
+{
+  "category": {
+    "attraction": "Attraction",
+    "restaurant": "Restaurant",
+    "hotel": "Hotel",
+    "landmark": "Landmark",
+    "nature": "Nature",
+    "entertainment": "Entertainment",
+    "other": "Other"
+  },
+  "budgetCategory": {
+    "accommodation": "Accommodation",
+    "food": "Food & Drink",
+    "activities": "Activities",
+    "transport": "Transport",
+    "shopping": "Shopping",
+    "other": "Other"
+  },
+  "budgetTier": {
+    "economy": "Economy",
+    "standard": "Standard",
+    "comfort": "Comfort",
+    "luxury": "Luxury"
+  },
+  "occasion": {
+    "honeymoon": "Honeymoon",
+    "birthday": "Birthday",
+    "anniversary": "Anniversary",
+    "business_leisure": "Business + Leisure",
+    "family_visit": "Family Visit"
+  },
+  "dateFlexibility": {
+    "exact": "Exact dates",
+    "month": "A specific month",
+    "flexible": "Flexible"
+  },
+  "wizard": {
+    "title": "Plan a Trip",
+    "step": "Step {{current}} of {{total}}",
+    "back": "Back",
+    "next": "Next",
+    "create": "Create My Plan",
+    "destination": {
+      "title": "Where do you want to go?",
+      "subtitle": "Search and pick a place — only real, verified destinations.",
+      "placeholder": "Search a city or country",
+      "empty": "No matches. Try another search.",
+      "selected": "Selected"
+    },
+    "dates": {
+      "title": "When are you traveling?",
+      "subtitle": "Pick how flexible your dates are.",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "datePlaceholder": "YYYY-MM-DD"
+    },
+    "budget": {
+      "title": "What's your budget?",
+      "subtitle": "Choose a comfort tier and, if you know it, a total amount.",
+      "amountLabel": "Total budget (optional)",
+      "amountPlaceholder": "e.g. 1500"
+    },
+    "travelers": {
+      "title": "Who's coming?",
+      "subtitle": "Tell us the group so recommendations fit everyone.",
+      "adults": "Adults",
+      "children": "Children",
+      "seniors": "Seniors",
+      "occasionLabel": "What's the occasion?",
+      "occasionNone": "Just traveling"
+    },
+    "interests": {
+      "title": "What are you into?",
+      "subtitle": "Pick a few — we'll swap museums for nightlife if that's more you.",
+      "notesPlaceholder": "Anything else we should know? (optional)"
+    },
+    "review": {
+      "title": "Ready to go",
+      "subtitle": "Double-check the details before we build your route.",
+      "destinationLabel": "Destination",
+      "datesLabel": "Dates",
+      "budgetLabel": "Budget",
+      "travelersLabel": "Travelers",
+      "occasionLabel": "Occasion",
+      "interestsLabel": "Interests"
+    },
+    "generating": {
+      "title": "Building your route…",
+      "message": "Our AI is matching {{city}} to your budget, group, and interests.",
+      "step1": "Reading your preferences",
+      "step2": "Scouting places in {{city}}",
+      "step3": "Balancing your budget",
+      "step4": "Finishing touches"
+    },
+    "validation": {
+      "destinationRequired": "Pick a destination from the list to continue.",
+      "datesRequired": "Add a start and end date to continue."
+    }
+  },
+  "trips": {
+    "title": "My Trips",
+    "subtitle": "Every plan you've created, in one place.",
+    "filters": { "all": "All", "planning": "Planning", "active": "Active", "completed": "Completed" },
+    "empty": "No trips yet — start your first plan.",
+    "emptyCta": "Plan a Trip",
+    "card": {
+      "travelers_one": "{{count}} traveler",
+      "travelers_other": "{{count}} travelers"
+    }
+  },
+  "plan": {
+    "notFound": "Plan not found.",
+    "day": "Day {{number}}",
+    "viewMap": "View on Map",
+    "budget": "Budget",
+    "collaborate": "Plan Together",
+    "swap": "I don't want this",
+    "swapped": "Swapped for an alternative",
+    "addNote": "Add a note",
+    "estimatedCost": "Est. {{amount}}",
+    "totalEstimate": "Total estimate",
+    "openPlace": "View place",
+    "a11y": { "swap": "Suggest an alternative for {{title}}" }
+  },
+  "budgetScreen": {
+    "title": "Budget Tracker",
+    "planned": "Planned",
+    "spent": "Spent so far",
+    "remaining": "Remaining",
+    "byCategory": "By category",
+    "expenses": "Expenses",
+    "addExpense": "Add Expense",
+    "expenseLabel": "What did you spend on?",
+    "expenseAmount": "Amount",
+    "expenseCategory": "Category",
+    "save": "Save",
+    "overBudget": "You're over budget for this category.",
+    "empty": "No expenses logged yet."
+  },
+  "collaborate": {
+    "title": "Plan Together",
+    "subtitle": "Invite friends, vote on stops, and leave notes.",
+    "invite": "Invite Friends",
+    "inviteCopied": "Invite link copied",
+    "collaborators": "Collaborators",
+    "voting": "Vote on stops",
+    "comments": "Comments",
+    "commentPlaceholder": "Add a comment…",
+    "send": "Send",
+    "owner": "Owner",
+    "editor": "Editor",
+    "generalComment": "General"
+  },
+  "map": {
+    "title": "Map",
+    "subtitle": "{{count}} pinned places",
+    "filterAll": "All",
+    "myPins": "My pins",
+    "legendPlan": "Plan stop",
+    "legendVisited": "Visited",
+    "empty": "No pins to show yet.",
+    "nearMe": "What's near me?"
+  },
+  "recommendations": {
+    "title": "What others recommend",
+    "subtitle": "Top-rated spots in {{city}}, from the Tripso community.",
+    "cityPickerTitle": "Browse by city",
+    "tripsoRating": "Tripso",
+    "googleRating": "Google",
+    "save": "Save",
+    "saved": "Saved",
+    "like": "Like",
+    "empty": "No recommendations for this city yet."
+  },
+  "place": {
+    "notFound": "Place not found.",
+    "openingHours": "Opening hours",
+    "address": "Address",
+    "about": "About",
+    "reviews": "Reviews",
+    "addToPlan": "Add to Plan",
+    "addedToPlan": "Added to plan",
+    "getDirections": "Get Directions",
+    "priceLevel": "Price level",
+    "reviewSourceGoogle": "via Google",
+    "reviewSourceTripso": "Tripso traveler",
+    "noReviews": "No reviews yet."
+  },
+  "journal": {
+    "title": "Travel Journal",
+    "subtitle": "Every place you've checked into.",
+    "stats": {
+      "countries_one": "{{count}} country",
+      "countries_other": "{{count}} countries",
+      "cities_one": "{{count}} city",
+      "cities_other": "{{count}} cities",
+      "places_one": "{{count}} place",
+      "places_other": "{{count}} places"
+    },
+    "addPin": "Check In",
+    "addPinTitle": "Check in a place",
+    "placeName": "Place name",
+    "city": "City",
+    "caption": "Caption (optional)",
+    "save": "Save Check-In",
+    "empty": "No check-ins yet — pin your first place."
+  },
+  "personalize": {
+    "title": "Personalize",
+    "step": "Step {{current}} of {{total}}",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save Profile",
+    "saved": "Your profile is ready!",
+    "savedMessage": "Trip suggestions will now be tailored to you.",
+    "done": "Done",
+    "about": {
+      "title": "Tell us about yourself",
+      "subtitle": "Your name and age help us pick the right tone and pace.",
+      "nameLabel": "Your name",
+      "namePlaceholder": "e.g. David",
+      "ageLabel": "Age group"
+    },
+    "ageGroup": {
+      "18_24": "18–24",
+      "25_34": "25–34",
+      "35_44": "35–44",
+      "45_54": "45–54",
+      "55_plus": "55+"
+    },
+    "tastes": {
+      "title": "Food & drink",
+      "subtitle": "So we never suggest a wine tour to someone who doesn't drink.",
+      "alcoholLabel": "Do you drink alcohol?",
+      "dietaryLabel": "Dietary preferences"
+    },
+    "alcohol": {
+      "yes": "Yes",
+      "occasional": "Occasionally",
+      "no": "No"
+    },
+    "dietary": {
+      "none": "No restrictions",
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan",
+      "halal": "Halal",
+      "gluten_free": "Gluten-free"
+    },
+    "style": {
+      "title": "Travel style",
+      "subtitle": "How do you like to move through a city?",
+      "paceLabel": "Pace",
+      "accommodationLabel": "Accommodation"
+    },
+    "pace": {
+      "relaxed": "Relaxed",
+      "balanced": "Balanced",
+      "intense": "Intense"
+    },
+    "interests": {
+      "title": "Your interests",
+      "subtitle": "Pick a few — museums out, bars in? Your call."
+    },
+    "review": {
+      "title": "All set",
+      "subtitle": "Here's what we'll use to personalize your plans.",
+      "nameLabel": "Name",
+      "ageLabel": "Age group",
+      "alcoholLabel": "Alcohol",
+      "dietaryLabel": "Diet",
+      "paceLabel": "Pace",
+      "accommodationLabel": "Accommodation",
+      "interestsLabel": "Interests"
+    }
+  },
+  "saved": {
+    "title": "Saved",
+    "subtitle": "Your collections of favorite places.",
+    "items_one": "{{count}} place",
+    "items_other": "{{count}} places",
+    "empty": "No saved collections yet."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": "You're all caught up."
+  }
+}
