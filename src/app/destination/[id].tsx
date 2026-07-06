@@ -111,6 +111,7 @@ export default function DestinationDetailScreen() {
         <View style={{ height: HERO_HEIGHT, width }}>
           <CachedImage
             uri={destination.imageUrl}
+            displayWidth={width}
             style={cachedImageStyles.fill}
             accessibilityLabel={t('home:photoA11y', { name })}
           />

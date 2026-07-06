@@ -2,6 +2,7 @@ import { Image, type ImageContentFit, type ImageProps, type ImageStyle } from 'e
 import { StyleSheet, type StyleProp } from 'react-native';
 
 import { useTheme } from '@/hooks/use-theme';
+import { sizedUri } from '@/utils/image';
 
 /**
  * CachedImage — ağdan gelen görseller için `expo-image` sarmalı.
@@ -16,6 +17,12 @@ import { useTheme } from '@/hooks/use-theme';
 export type CachedImageProps = Omit<ImageProps, 'style'> & {
   /** Ağ URL'si (ya da expo-image source). */
   uri: string;
+  /**
+   * Görselin ekranda kaplayacağı genişlik (dp). Verilirse Unsplash URL'leri
+   * cihaz yoğunluğuna göre küçültülür (bkz. utils/image.ts) — 92px kutuya
+   * 1200px görsel indirilmesini önler. Bilinmiyorsa boş bırak.
+   */
+  displayWidth?: number;
   /** contentFit (default: 'cover'). */
   contentFit?: ImageContentFit;
   /** Köşe yarıçapı kısayolu. */
@@ -34,6 +41,7 @@ const DEFAULT_BLURHASH = 'L6PZfSi_.AyE_3t7t7R**0o#DgR4';
 
 export function CachedImage({
   uri,
+  displayWidth,
   contentFit = 'cover',
   radius,
   recyclingKey,
@@ -47,7 +55,7 @@ export function CachedImage({
 
   return (
     <Image
-      source={{ uri }}
+      source={{ uri: displayWidth ? sizedUri(uri, displayWidth) : uri }}
       placeholder={placeholder ?? { blurhash: DEFAULT_BLURHASH }}
       contentFit={contentFit}
       transition={250}

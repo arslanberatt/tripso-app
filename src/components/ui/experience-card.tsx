@@ -36,6 +36,7 @@ export function ExperienceCard({ experience, onPress, width = 160 }: ExperienceC
       <View style={[styles.imageWrap, { borderRadius: Radii.lg }]}>
         <CachedImage
           uri={experience.imageUrl}
+          displayWidth={width}
           recyclingKey={experience.id}
           style={cachedImageStyles.fill}
           accessibilityLabel={t('home:photoA11y', { name: title })}

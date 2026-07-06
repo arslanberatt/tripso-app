@@ -36,6 +36,7 @@ export function DestinationCard({ destination, onPress, width = 220 }: Destinati
       <View style={[styles.imageWrap, { borderRadius: Radii.lg }]}>
         <CachedImage
           uri={destination.imageUrl}
+          displayWidth={width}
           recyclingKey={destination.id}
           style={cachedImageStyles.fill}
           accessibilityLabel={t('home:photoA11y', { name })}

@@ -46,6 +46,7 @@ export function ThumbStrip({
           <CachedImage
             key={uri}
             uri={uri}
+            displayWidth={size}
             radius={Radii.lg}
             recyclingKey={uri}
             decorative

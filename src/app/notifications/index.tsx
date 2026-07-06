@@ -1,7 +1,7 @@
 import { router, type Href } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
@@ -52,42 +52,41 @@ export default function NotificationsScreen() {
           </Pressable>
         }
       />
-      <ScrollView
+      <FlatList
+        data={data}
+        keyExtractor={(n) => n.id}
+        renderItem={({ item: n }) => {
+          const isRead = readIds.has(n.id);
+          return (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={n.title}
+              onPress={() => open(n)}
+              style={({ pressed }) => [styles.row, { opacity: pressed ? 0.7 : 1 }]}
+            >
+              <View style={[styles.iconWrap, { backgroundColor: isRead ? theme.backgroundElement : theme.primary }]}>
+                <Icon name={TYPE_ICON[n.type]} size={18} color={isRead ? theme.textSecondary : theme.onPrimary} />
+              </View>
+              <View style={styles.body}>
+                <ThemedText type={isRead ? 'small' : 'smallBold'} numberOfLines={1}>
+                  {n.title}
+                </ThemedText>
+                <ThemedText type="caption" themeColor="textSecondary" numberOfLines={2}>
+                  {n.body}
+                </ThemedText>
+              </View>
+              {!isRead && <View style={[styles.dot, { backgroundColor: theme.primary }]} />}
+            </Pressable>
+          );
+        }}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + Spacing.five }]}
-      >
-        {data.length === 0 ? (
-          <ThemedText type="small" themeColor="textTertiary" style={styles.padded}>
+        ListEmptyComponent={
+          <ThemedText type="small" themeColor="textTertiary">
             {t('pages:notifications.empty')}
           </ThemedText>
-        ) : (
-          data.map((n) => {
-            const isRead = readIds.has(n.id);
-            return (
-              <Pressable
-                key={n.id}
-                accessibilityRole="button"
-                accessibilityLabel={n.title}
-                onPress={() => open(n)}
-                style={({ pressed }) => [styles.row, { opacity: pressed ? 0.7 : 1 }]}
-              >
-                <View style={[styles.iconWrap, { backgroundColor: isRead ? theme.backgroundElement : theme.primary }]}>
-                  <Icon name={TYPE_ICON[n.type]} size={18} color={isRead ? theme.textSecondary : theme.onPrimary} />
-                </View>
-                <View style={styles.body}>
-                  <ThemedText type={isRead ? 'small' : 'smallBold'} numberOfLines={1}>
-                    {n.title}
-                  </ThemedText>
-                  <ThemedText type="caption" themeColor="textSecondary" numberOfLines={2}>
-                    {n.body}
-                  </ThemedText>
-                </View>
-                {!isRead && <View style={[styles.dot, { backgroundColor: theme.primary }]} />}
-              </Pressable>
-            );
-          })
-        )}
-      </ScrollView>
+        }
+      />
     </ThemedView>
   );
 }
@@ -95,7 +94,6 @@ export default function NotificationsScreen() {
 const styles = StyleSheet.create({
   fill: { flex: 1 },
   content: { paddingHorizontal: Spacing.three, gap: Spacing.one },
-  padded: { paddingHorizontal: Spacing.three },
   row: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three, paddingVertical: Spacing.three },
   iconWrap: { width: 40, height: 40, borderRadius: Radii.pill, alignItems: 'center', justifyContent: 'center' },
   body: { flex: 1, gap: 2 },

@@ -1,9 +1,10 @@
 import { ImageBackground } from 'expo-image';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
-import { Radii, Spacing } from '@/constants/theme';
+import { MaxContentWidth, Radii, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { sizedUri } from '@/utils/image';
 
 /**
  * PromoBanner — Home'daki turuncu/görselli tanıtım bandı.
@@ -26,6 +27,8 @@ export function PromoBanner({
   onPress,
 }: PromoBannerProps) {
   const theme = useTheme();
+  const { width } = useWindowDimensions();
+  const bannerWidth = Math.min(width, MaxContentWidth);
 
   const body = (
     <View style={styles.body}>
@@ -56,7 +59,7 @@ export function PromoBanner({
     >
       {imageUrl ? (
         <ImageBackground
-          source={{ uri: imageUrl }}
+          source={{ uri: sizedUri(imageUrl, bannerWidth) }}
           contentFit="cover"
           style={[styles.banner, { borderRadius: Radii.xl }]}
         >

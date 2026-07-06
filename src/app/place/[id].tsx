@@ -55,7 +55,7 @@ export default function PlaceDetailScreen() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.gallery}>
           {place.gallery.map((uri) => (
             <View key={uri} style={styles.galleryImage}>
-              <CachedImage uri={uri} style={cachedImageStyles.fill} recyclingKey={uri} radius={Radii.lg} />
+              <CachedImage uri={uri} displayWidth={280} style={cachedImageStyles.fill} recyclingKey={uri} radius={Radii.lg} />
             </View>
           ))}
         </ScrollView>

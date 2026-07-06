@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ThemedView } from '@/components/themed-view';
 import { CategoryChipRow } from '@/components/ui/category-chip-row';
@@ -74,28 +74,27 @@ export default function HomeScreen() {
         <View style={styles.padded}>
           <SectionHeader title={t('home:topDestinations')} onSeeAll={() => {}} />
         </View>
-        <ScrollView
+        {/* Yatay FlatList (dikey ScrollView içinde sorunsuz) — kartlar sanallaşır. */}
+        <FlatList
           horizontal
+          data={destinations}
+          keyExtractor={(d) => d.id}
+          renderItem={({ item }) => <DestinationCard destination={item} onPress={openDestination} />}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.hList}
-        >
-          {destinations.map((d) => (
-            <DestinationCard key={d.id} destination={d} onPress={openDestination} />
-          ))}
-        </ScrollView>
+        />
 
         <View style={[styles.padded, styles.sectionGap]}>
           <SectionHeader title={t('home:popularExperiences')} onSeeAll={() => {}} />
         </View>
-        <ScrollView
+        <FlatList
           horizontal
+          data={experiences}
+          keyExtractor={(e) => e.id}
+          renderItem={({ item }) => <ExperienceCard experience={item} />}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.hList}
-        >
-          {experiences.map((e) => (
-            <ExperienceCard key={e.id} experience={e} />
-          ))}
-        </ScrollView>
+        />
       </ScrollView>
     </ThemedView>
   );

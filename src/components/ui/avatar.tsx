@@ -24,6 +24,7 @@ export function Avatar({ uri, name, size = 44 }: AvatarProps) {
     return (
       <CachedImage
         uri={uri}
+        displayWidth={size}
         radius={Radii.pill}
         style={circle}
         accessibilityLabel={name ? `${name} avatar` : 'User avatar'}
