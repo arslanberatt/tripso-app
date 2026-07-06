@@ -34,9 +34,22 @@
     "month": "A specific month",
     "flexible": "Flexible"
   },
+  "interests": {
+    "culture": "Culture & History",
+    "food": "Food & Drink",
+    "nature": "Nature",
+    "nightlife": "Nightlife",
+    "art": "Art & Museums",
+    "shopping": "Shopping",
+    "relaxation": "Relaxation",
+    "adventure": "Adventure",
+    "photography": "Photography",
+    "sports": "Sports & Active"
+  },
   "wizard": {
     "title": "Plan a Trip",
     "step": "Step {{current}} of {{total}}",
+    "a11y": { "increase": "Increase {{label}}", "decrease": "Decrease {{label}}" },
     "back": "Back",
     "next": "Next",
     "create": "Create My Plan",

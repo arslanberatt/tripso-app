@@ -1,21 +1,19 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
+import { FlatList, StyleSheet, View, useWindowDimensions } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { SearchSuggestions } from '@/components/search/search-suggestions';
+import { matchesQuery } from '@/components/search/destination-matcher';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Chip } from '@/components/ui/chip';
 import { DestinationCard } from '@/components/ui/destination-card';
 import { Icon } from '@/components/ui/icon';
 import { IconButton } from '@/components/ui/icon-button';
-import { RemovableChip } from '@/components/ui/removable-chip';
 import { SearchInput } from '@/components/ui/search-input';
-import { SectionHeader } from '@/components/ui/section-header';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
-import { destinationName, tagLabel } from '@/i18n/content';
 import { useDestinations } from '@/hooks/data/use-destinations';
 import {
   addRecentSearch,
@@ -28,13 +26,9 @@ import type { Destination } from '@/types';
 /**
  * Search (`/search`) — adanmış arama ekranı (kök stack route, tabs ÜSTÜNDE).
  *
- * Tüm platformlarda Home'daki arama çubuğuna dokununca `router.push('/search')`
- * ile açılır (web/iOS/Android tutarlı). Tabs içinde GİZLİ bir sekme yerine kök
- * route tercih edildi: gizli sekmeye push web'de çalışmıyordu.
- *
- * Sorgu boşken: son aramalar (kalıcı, silinebilir) + ilgi alanı etiketleri +
- * popüler destinasyonlar. Sorgu varken isim/bölge/şehir/etiket üzerinden filtreler.
- * Arama gönderilince veya bir sonuç açılınca terim geçmişe yazılır.
+ * Liste FlatList ile sanallaştırılır; boş sorguda öneri başlığı
+ * (`SearchSuggestions`) `ListHeaderComponent` olarak akar. Sorgu varken
+ * isim/bölge/şehir/etiket üzerinden filtreler (`matchesQuery`).
  *
  * TODO(api): mock filtre yerine `usePlaceSearch(query)` (Mapbox) bağlanacak.
  */
@@ -61,7 +55,7 @@ export default function SearchScreen() {
 
   const trimmed = query.trim().toLowerCase();
   const isSearching = trimmed.length > 0;
-  const results = isSearching ? destinations.filter((d) => matches(d, trimmed)) : destinations;
+  const results = isSearching ? destinations.filter((d) => matchesQuery(d, trimmed)) : destinations;
 
   // İlgi alanı etiketleri: tüm destinasyon etiketlerinin tekilleştirilmiş listesi.
   const popularTags = Array.from(new Set(destinations.flatMap((d) => d.tags))).slice(0, 8);
@@ -124,109 +118,42 @@ export default function SearchScreen() {
         </View>
       </View>
 
-      <ScrollView
+      <FlatList
+        data={results}
+        keyExtractor={(d) => d.id}
+        renderItem={({ item }) => (
+          <DestinationCard destination={item} width={cardWidth} onPress={openDestination} />
+        )}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + Spacing.five }]}
-      >
-        {isSearching ? (
-          // ── Sonuçlar ──────────────────────────────────────────────
-          results.length > 0 ? (
-            <>
-              <ThemedText type="small" themeColor="textSecondary">
-                {t('home:search.resultsCount', { count: results.length })}
-              </ThemedText>
-              <View style={styles.list}>
-                {results.map((d) => (
-                  <Animated.View key={d.id} entering={FadeInDown.duration(220)}>
-                    <DestinationCard destination={d} width={cardWidth} onPress={openDestination} />
-                  </Animated.View>
-                ))}
-              </View>
-            </>
+        ListHeaderComponent={
+          isSearching ? (
+            <ThemedText type="small" themeColor="textSecondary">
+              {t('home:search.resultsCount', { count: results.length })}
+            </ThemedText>
           ) : (
-            <Animated.View entering={FadeIn.duration(220)} style={styles.empty}>
-              <Icon name="search-outline" size={40} themeColor="textTertiary" />
-              <ThemedText type="h3">{t('home:search.noResultsTitle')}</ThemedText>
-              <ThemedText type="small" themeColor="textSecondary" style={styles.emptyMsg}>
-                {t('home:search.noResultsMessage', { query: query.trim() })}
-              </ThemedText>
-            </Animated.View>
+            <SearchSuggestions
+              recents={recents}
+              popularTags={popularTags}
+              onApplyTerm={applyTerm}
+              onRemoveRecent={handleRemoveRecent}
+              onClearRecents={handleClearRecents}
+            />
           )
-        ) : (
-          // ── Keşif (sorgu boş) ─────────────────────────────────────
-          <Animated.View entering={FadeIn.duration(220)} style={styles.sections}>
-            {recents.length > 0 && (
-              <View>
-                <SectionHeader
-                  title={t('home:search.recent')}
-                  actionLabel={t('home:search.clear')}
-                  onSeeAll={handleClearRecents}
-                />
-                <View style={styles.chipWrap}>
-                  {recents.map((term) => (
-                    <RemovableChip
-                      key={term}
-                      label={term}
-                      onPress={() => applyTerm(term)}
-                      onRemove={() => handleRemoveRecent(term)}
-                      removeAccessibilityLabel={t('home:search.a11y.removeRecent', { term })}
-                    />
-                  ))}
-                </View>
-              </View>
-            )}
-
-            <View>
-              <SectionHeader title={t('home:search.browse')} />
-              <View style={styles.chipWrap}>
-                {popularTags.map((tag) => {
-                  const label = tagLabel(tag);
-                  return (
-                    <Chip
-                      key={tag}
-                      label={label}
-                      accessibilityLabel={t('home:search.a11y.applySearch', { term: label })}
-                      onPress={() => applyTerm(label)}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-
-            <View>
-              <SectionHeader title={t('home:search.suggestions')} />
-              <View style={styles.list}>
-                {destinations.map((d) => (
-                  <DestinationCard
-                    key={d.id}
-                    destination={d}
-                    width={cardWidth}
-                    onPress={openDestination}
-                  />
-                ))}
-              </View>
-            </View>
+        }
+        ListEmptyComponent={
+          <Animated.View entering={FadeIn.duration(220)} style={styles.empty}>
+            <Icon name="search-outline" size={40} themeColor="textTertiary" />
+            <ThemedText type="h3">{t('home:search.noResultsTitle')}</ThemedText>
+            <ThemedText type="small" themeColor="textSecondary" style={styles.emptyMsg}>
+              {t('home:search.noResultsMessage', { query: query.trim() })}
+            </ThemedText>
           </Animated.View>
-        )}
-      </ScrollView>
+        }
+      />
     </ThemedView>
   );
-}
-
-/** Destinasyonu sorguya karşı eşleştirir (çevrili ad dâhil). */
-function matches(d: Destination, q: string): boolean {
-  const haystack = [
-    destinationName(d),
-    d.name,
-    d.region,
-    d.cityName,
-    ...d.tags,
-    ...d.tags.map((tag) => tagLabel(tag)),
-  ]
-    .join(' ')
-    .toLowerCase();
-  return haystack.includes(q);
 }
 
 const styles = StyleSheet.create({
@@ -242,14 +169,11 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: Spacing.three,
     paddingTop: Spacing.two,
-    gap: Spacing.three,
+    gap: Spacing.four,
     width: '100%',
     maxWidth: MaxContentWidth,
     alignSelf: 'center',
   },
-  sections: { gap: Spacing.four },
-  chipWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
-  list: { gap: Spacing.four },
   empty: { alignItems: 'center', gap: Spacing.two, paddingTop: Spacing.five },
   emptyMsg: { textAlign: 'center' },
 });

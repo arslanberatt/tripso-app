@@ -1,20 +1,16 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native';
+import { ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { IdentityCards } from '@/components/profile/identity-cards';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Avatar } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
-import { Icon } from '@/components/ui/icon';
-import { IconButton } from '@/components/ui/icon-button';
-import { AppInput } from '@/components/ui/input';
 import { LanguageSheet } from '@/components/ui/language-sheet';
 import { SettingsGroup } from '@/components/ui/settings-group';
 import { SettingsRow } from '@/components/ui/settings-row';
-import { BottomTabInset, Radii, Spacing } from '@/constants/theme';
+import { BottomTabInset, Spacing } from '@/constants/theme';
 import { useAppBootstrap } from '@/hooks/use-app-bootstrap';
 import { useProfile } from '@/hooks/data/use-profile';
 import { usePreferences } from '@/hooks/use-preferences';
@@ -45,7 +41,6 @@ export default function ProfileScreen() {
   const name = displayName ?? user.name;
 
   // Sadece görsel/yerel state (kalıcı değil; gerçek auth'a bağlı değil).
-  const [query, setQuery] = useState('');
   const [faceId, setFaceId] = useState(true);
   const [sheetVisible, setSheetVisible] = useState(false);
 
@@ -92,53 +87,7 @@ export default function ProfileScreen() {
           </ThemedText>
         </View>
 
-        {/* Arama (görsel; filtre TODO) — kart zeminli, ekrandan ayrışır */}
-        <Card radius={Radii.pill}>
-          <AppInput
-            leadingIcon="search"
-            placeholder={t('home:profile.search')}
-            value={query}
-            onChangeText={setQuery}
-            clearable
-            returnKeyType="search"
-            containerStyle={styles.search}
-          />
-        </Card>
-
-        {/* Kimlik kartı */}
-        <Card radius={Radii.lg}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t('home:profile.identityA11y')}
-            onPress={() => router.push('/personalize')}
-            style={({ pressed }) => [styles.identity, { opacity: pressed ? 0.6 : 1 }]}
-          >
-            <Avatar uri={user.avatarUrl} name={name} size={48} />
-            <View style={styles.identityText}>
-              <ThemedText type="h3" numberOfLines={1}>
-                {name}
-              </ThemedText>
-              <View style={styles.emailRow}>
-                <Icon name="mail-outline" size={14} themeColor="textSecondary" />
-                <ThemedText type="caption" themeColor="textSecondary" numberOfLines={1}>
-                  {user.email}
-                </ThemedText>
-              </View>
-            </View>
-            <Icon name="chevron-forward" size={18} themeColor="textTertiary" />
-          </Pressable>
-        </Card>
-
-        {/* ID / QR */}
-        <Card radius={Radii.lg}>
-          <View style={styles.idRow}>
-            <Icon name="card-outline" size={22} themeColor="text" />
-            <ThemedText type="small" themeColor="textSecondary" style={styles.idText}>
-              {shortenId(user.id)}
-            </ThemedText>
-            <IconButton icon="qr-code-outline" accessibilityLabel={t('home:profile.qrA11y')} />
-          </View>
-        </Card>
+        <IdentityCards user={user} name={name} onPressIdentity={() => router.push('/personalize')} />
 
         {/* Gezinme */}
         <SettingsGroup>
@@ -245,11 +194,6 @@ export default function ProfileScreen() {
   );
 }
 
-/** Uzun id'yi kısaltır: 111111…7777. */
-function shortenId(id: string): string {
-  return id.length > 12 ? `${id.slice(0, 6)}…${id.slice(-4)}` : id;
-}
-
 const styles = StyleSheet.create({
   fill: { flex: 1 },
   content: {
@@ -258,24 +202,4 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
   },
   titleBlock: { gap: Spacing.half },
-  // Card kendi zemin + köşesini verir; input zemini şeffaf kalsın.
-  search: { backgroundColor: 'transparent', paddingHorizontal: Spacing.four },
-  identity: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.three,
-    padding: Spacing.three,
-  },
-  identityText: { flex: 1, gap: Spacing.half },
-  emailRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  idRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.two,
-    paddingVertical: Spacing.two,
-    paddingLeft: Spacing.three,
-    paddingRight: Spacing.two,
-    minHeight: 52,
-  },
-  idText: { flex: 1 },
 });

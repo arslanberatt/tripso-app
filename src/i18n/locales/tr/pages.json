@@ -34,9 +34,22 @@
     "month": "Belirli bir ay",
     "flexible": "Esnek"
   },
+  "interests": {
+    "culture": "Kültür & Tarih",
+    "food": "Yeme & İçme",
+    "nature": "Doğa",
+    "nightlife": "Gece Hayatı",
+    "art": "Sanat & Müze",
+    "shopping": "Alışveriş",
+    "relaxation": "Dinlence",
+    "adventure": "Macera",
+    "photography": "Fotoğraf",
+    "sports": "Spor & Aktif"
+  },
   "wizard": {
     "title": "Gezi Planla",
     "step": "Adım {{current}} / {{total}}",
+    "a11y": { "increase": "{{label}} artır", "decrease": "{{label}} azalt" },
     "back": "Geri",
     "next": "İleri",
     "create": "Planımı Oluştur",

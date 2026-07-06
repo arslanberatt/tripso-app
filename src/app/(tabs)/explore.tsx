@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
@@ -47,75 +47,75 @@ export default function ExploreScreen() {
 
   return (
     <ThemedView type="backgroundElement" style={styles.fill}>
-      <ScrollView
+      <FlatList
+        data={visiblePlans}
+        keyExtractor={(p) => p.id}
+        renderItem={({ item }) => (
+          <View style={styles.padded}>
+            <PlanCard plan={item} onPress={() => router.push(`/plan/${item.id}`)} />
+          </View>
+        )}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={[styles.content, { paddingTop: insets.top + Spacing.three }]}
-      >
-        {/* Başlık + avatar */}
-        <View style={[styles.padded, styles.headerRow]}>
-          <ThemedText type="h1" style={styles.heading}>
-            {t('home:explore.heading')}
-          </ThemedText>
-          <Avatar uri={user.avatarUrl} name={displayName ?? user.name} size={48} />
-        </View>
-
-        <View style={styles.padded}>
-            <ThumbStrip
-              images={destinations.slice(0, 5).map((d) => d.imageUrl)}
-              edgePadding={Spacing.three}
-            />
-            <View style={styles.promptInner}>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={t('home:explore.createCta')}
-                onPress={() => router.push('/search')}
-                style={({ pressed }) => [styles.createBtn, { opacity: pressed ? 0.85 : 1 }]}
-              >
-                <Icon name="sparkles" size={16} color="#fff" />
-                <ThemedText type="small" style={styles.createBtnLabel}>
-                  {t('home:explore.createCta')}
-                </ThemedText>
-              </Pressable>
-              <ThemedText type="caption" themeColor="textTertiary" style={styles.hint}>
+        ListHeaderComponent={
+          <>
+            {/* Başlık + avatar */}
+            <View style={[styles.padded, styles.headerRow]}>
+              <ThemedText type="h1" style={styles.heading}>
+                {t('home:explore.heading')}
               </ThemedText>
+              <Avatar uri={user.avatarUrl} name={displayName ?? user.name} size={48} />
             </View>
-        </View>
 
+            <View style={styles.padded}>
+              <ThumbStrip
+                images={destinations.slice(0, 5).map((d) => d.imageUrl)}
+                edgePadding={Spacing.three}
+              />
+              <View style={styles.promptInner}>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t('home:explore.createCta')}
+                  onPress={() => router.push('/search')}
+                  style={({ pressed }) => [styles.createBtn, { opacity: pressed ? 0.85 : 1 }]}
+                >
+                  <Icon name="sparkles" size={16} color="#fff" />
+                  <ThemedText type="small" style={styles.createBtnLabel}>
+                    {t('home:explore.createCta')}
+                  </ThemedText>
+                </Pressable>
+              </View>
+            </View>
 
-        {/* Sekmeler + filtreler */}
-        <View style={[styles.padded, styles.tabsRow]}>
-          <UnderlineTabs
-            options={[
-              { value: 'explore', label: t('home:explore.tabs.explore') },
-              { value: 'myPlan', label: t('home:explore.tabs.myPlan') },
-            ]}
-            value={tab}
-            onChange={setTab}
-          />
-          <View style={styles.filters}>
-            <FilterLabel
-              label={t('home:explore.filters.allPlans')}
-              active={filter === 'all'}
-              activeColor={theme.primary}
-              onPress={() => setFilter('all')}
-            />
-            <FilterLabel
-              label={t('home:explore.filters.active')}
-              active={filter === 'active'}
-              activeColor={theme.primary}
-              onPress={() => setFilter('active')}
-            />
-          </View>
-        </View>
-
-        {/* Plan kartları (filtreli) */}
-        <View style={[styles.padded, styles.cardList]}>
-          {visiblePlans.map((p) => (
-            <PlanCard key={p.id} plan={p} onPress={() => router.push(`/plan/${p.id}`)} />
-          ))}
-        </View>
-      </ScrollView>
+            {/* Sekmeler + filtreler */}
+            <View style={[styles.padded, styles.tabsRow]}>
+              <UnderlineTabs
+                options={[
+                  { value: 'explore', label: t('home:explore.tabs.explore') },
+                  { value: 'myPlan', label: t('home:explore.tabs.myPlan') },
+                ]}
+                value={tab}
+                onChange={setTab}
+              />
+              <View style={styles.filters}>
+                <FilterLabel
+                  label={t('home:explore.filters.allPlans')}
+                  active={filter === 'all'}
+                  activeColor={theme.primary}
+                  onPress={() => setFilter('all')}
+                />
+                <FilterLabel
+                  label={t('home:explore.filters.active')}
+                  active={filter === 'active'}
+                  activeColor={theme.primary}
+                  onPress={() => setFilter('active')}
+                />
+              </View>
+            </View>
+          </>
+        }
+      />
     </ThemedView>
   );
 }
@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
   },
   heading: { flex: 1 },
-  promptGroup: { paddingVertical: Spacing.three, gap: Spacing.three },
   promptInner: { paddingHorizontal: Spacing.three, gap: Spacing.two, alignItems: 'center' },
   createBtn: {
     flexDirection: 'row',
@@ -177,9 +176,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
   },
   createBtnLabel: { color: '#fff', fontWeight: '700' },
-  hint: { paddingHorizontal: Spacing.one, textAlign: 'center' },
   tabsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   filters: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
   filter: { flexDirection: 'row', alignItems: 'center', gap: Spacing.one },
-  cardList: { gap: Spacing.three },
 });
