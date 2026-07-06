@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "app": "tripso-app",
+  "description": "Her ekranın backend/admin panelinden beklediği veri ve yönetim yetenekleri. typeRef alanları src/types/*.ts içindeki gerçek tiplere işaret eder.",
+  "typesSource": "src/types/*.ts",
+  "capabilityVocabulary": ["create", "read", "update", "delete", "moderate", "curate", "publish", "schedule", "configure"],
+  "screens": [
+    {
+      "route": "/home",
+      "screenFile": "src/app/(tabs)/home.tsx",
+      "dataNeeds": [
+        {
+          "entity": "Destination",
+          "typeRef": "src/types/place.ts#Destination",
+          "keyFields": ["id", "name", "region", "countryCode", "cityName", "imageUrl", "rating", "reviewCount", "tags"],
+          "exampleEndpoint": "GET /destinations?category={tag}&limit=10",
+          "adminCapabilities": ["create", "update", "delete", "curate", "publish"],
+          "notes": "'Top Destinations' sıralaması admin'den yönetilmeli. imageUrl yüksek çözünürlük döner; istemci w= parametresiyle küçültür."
+        },
+        {
+          "entity": "Experience",
+          "typeRef": "src/types/place.ts#Experience",
+          "keyFields": ["id", "title", "category", "imageUrl", "durationLabel"],
+          "exampleEndpoint": "GET /experiences?limit=10",
+          "adminCapabilities": ["create", "update", "delete", "curate"],
+          "notes": "'Popular Experiences' listesi tamamen admin küratörlüğünde."
+        },
+        {
+          "entity": "PromoCampaign",
+          "typeRef": "(yeni tip önerisi — backend'de henüz yok)",
+          "keyFields": ["id", "title", "subtitle", "ctaLabel", "imageUrl", "targetRoute", "startsAt", "endsAt"],
+          "exampleEndpoint": "GET /campaigns/active",
+          "adminCapabilities": ["create", "update", "delete", "publish", "schedule"],
+          "notes": "PromoBanner içeriği; tarih aralığıyla zamanlanabilir olmalı."
+        },
+        {
+          "entity": "CategoryFilter",
+          "typeRef": "src/mocks/destinations.ts#CATEGORY_FILTERS",
+          "keyFields": ["key", "label", "icon"],
+          "exampleEndpoint": "GET /catalog/categories",
+          "adminCapabilities": ["configure"],
+          "notes": "Kategori chip'leri (All/Adventure/Beach/...) katalog olarak yönetilir; label'lar i18n anahtarıyla döner."
+        },
+        {
+          "entity": "Notification (unread count)",
+          "typeRef": "src/types/notification.ts#Notification",
+          "keyFields": ["id", "status"],
+          "exampleEndpoint": "GET /notifications/unread-count",
+          "adminCapabilities": ["read"],
+          "notes": "HomeHeader'daki zil rozeti."
+        }
+      ]
+    },
+    {
+      "route": "/search",
+      "screenFile": "src/app/search.tsx",
+      "dataNeeds": [
+        {
+          "entity": "Destination",
+          "typeRef": "src/types/place.ts#Destination",
+          "keyFields": ["id", "name", "region", "cityName", "tags", "imageUrl", "rating"],
+          "exampleEndpoint": "GET /destinations/search?q={query}",
+          "adminCapabilities": ["read", "curate"],
+          "notes": "Sorgu boşken gösterilen 'popüler destinasyonlar' admin küratörlüğünde olabilir."
+        },
+        {
+          "entity": "TagCatalog",
+          "typeRef": "Destination.tags türevi",
+          "keyFields": ["tag", "label"],
+          "exampleEndpoint": "GET /catalog/tags/popular",
+          "adminCapabilities": ["configure", "curate"],
+          "notes": "İlgi alanı chip'leri; şu an mock'ta tekilleştirilerek üretiliyor."
+        }
+      ]
+    },
+    {
+      "route": "/destination/[id]",
+      "screenFile": "src/app/destination/[id].tsx",
+      "dataNeeds": [
+        {
+          "entity": "Destination",
+          "typeRef": "src/types/place.ts#Destination",
+          "keyFields": ["id", "name", "region", "cityName", "gallery", "description", "tags", "highlights", "rating", "reviewCount"],
+          "exampleEndpoint": "GET /destinations/{id}",
+          "adminCapabilities": ["create", "update", "delete", "publish"],
+          "notes": "Açıklama + highlights (ikon+etiket) + galeri tamamen admin içeriği; çeviriler i18n content anahtarlarıyla."
+        }
+      ]
+    },
+    {
+      "route": "/trip/new",
+      "screenFile": "src/app/trip/new.tsx",
+      "dataNeeds": [
+        {
+          "entity": "PlaceSearchResult",
+          "typeRef": "src/types/place.ts#PlaceSearchResult",
+          "keyFields": ["mapboxId", "name", "fullName", "lat", "lng", "countryCode", "cityName"],
+          "exampleEndpoint": "GET /places/search?q={query}&types=city,country",
+          "adminCapabilities": ["read"],
+          "notes": "Backend'in Mapbox geocoding proxy'si. Kullanıcı serbest metin GÖNDEREMEZ; yalnızca bu sonuçlardan seçer."
+        },
+        {
+          "entity": "WizardCatalogs",
+          "typeRef": "src/types/trip.ts#BudgetTier|Occasion|DateFlexibility",
+          "keyFields": ["budgetTiers", "occasions", "interests", "dateFlexibilityOptions"],
+          "exampleEndpoint": "GET /catalog/trip-wizard",
+          "adminCapabilities": ["configure"],
+          "notes": "İlgi alanı listesi ve occasion seçenekleri admin'den genişletilebilir olmalı (AI prompt'unu da besler)."
+        },
+        {
+          "entity": "Trip (create)",
+          "typeRef": "src/types/trip.ts#Trip",
+          "keyFields": ["destinationCity", "destinationCountryCode", "startDate", "endDate", "dateFlexibility", "travelers", "budgetTier", "budgetAmount", "occasion", "travelFocus", "tripSpecificInterests", "freeTextNotes"],
+          "exampleEndpoint": "POST /trips → 201 {trip} + PlanGenerationJob",
+          "adminCapabilities": ["read", "moderate"],
+          "notes": "Sihirbaz çıktısı. Admin panelinde oluşturulan tripleri ve AI üretim job'larını (PENDING/FAILED) izleme ekranı beklenir."
+        },
+        {
+          "entity": "PlanGenerationJob (poll)",
+          "typeRef": "src/types/plan.ts#PlanGenerationJob",
+          "keyFields": ["id", "status", "planVersionId", "errorCode"],
+          "exampleEndpoint": "GET /trips/{id}/generation-jobs/latest",
+          "adminCapabilities": ["read", "moderate"],
+          "notes": "Üretim ekranındaki progress bu job'ı poll'lar; admin failed job'ları yeniden kuyruğa alabilmeli."
+        }
+      ]
+    },
+    {
+      "route": "/plan/[id]",
+      "screenFile": "src/app/plan/[id]/index.tsx",
+      "dataNeeds": [
+        {
+          "entity": "PlanVersion + PlanDay + PlanItem",
+          "typeRef": "src/types/plan.ts#PlanVersion",
+          "keyFields": ["id", "days[].dayNumber", "days[].items[].title", "items[].itemType", "items[].startTime", "items[].durationMinutes", "items[].placeId", "items[].aiRecommendationNote"],
+          "exampleEndpoint": "GET /trips/{id}/plan-versions/active",
+          "adminCapabilities": ["read", "moderate"],
+          "notes": "Gün gün rota. Admin, şikayet edilen AI öneri metinlerini moderate edebilmeli."
+        },
+        {
+          "entity": "AlternativeItem",
+          "typeRef": "src/mocks/plan-details.ts#ALTERNATIVE_ITEM_POOL (öneri: backend'de kurallı havuz)",
+          "keyFields": ["category", "title", "placeId", "estimatedCost"],
+          "exampleEndpoint": "POST /plan-items/{id}/alternatives",
+          "adminCapabilities": ["curate", "configure"],
+          "notes": "'Bunu istemiyorum' akışının alternatif havuzu; kategori bazlı kurallar admin'den ayarlanabilir."
+        }
+      ]
+    },
+    {
+      "route": "/plan/[id]/budget",
+      "screenFile": "src/app/plan/[id]/budget.tsx",
+      "dataNeeds": [
+        {
+          "entity": "Expense",
+          "typeRef": "src/types/budget.ts#Expense",
+          "keyFields": ["id", "planId", "category", "label", "amount", "currency", "date"],
+          "exampleEndpoint": "GET/POST /trips/{id}/expenses",
+          "adminCapabilities": ["read"],
+          "notes": "Kullanıcı verisi; admin yalnız toplu istatistik görür. Kategori sözlüğü (accommodation/food/...) configure edilebilir."
+        }
+      ]
+    },
+    {
+      "route": "/plan/[id]/collaborate",
+      "screenFile": "src/app/plan/[id]/collaborate.tsx",
+      "dataNeeds": [
+        {
+          "entity": "PlanCollaborator",
+          "typeRef": "src/types/collaboration.ts#PlanCollaborator",
+          "keyFields": ["id", "name", "avatarUrl", "role"],
+          "exampleEndpoint": "GET /trips/{id}/collaborators | POST /trips/{id}/invites",
+          "adminCapabilities": ["read", "moderate"],
+          "notes": "Davet linki üretimi backend'de; link TTL'i configure edilebilir."
+        },
+        {
+          "entity": "PlanVote + PlanComment",
+          "typeRef": "src/types/collaboration.ts#PlanVote|PlanComment",
+          "keyFields": ["itemId", "upvotes", "downvotes", "text", "authorName", "createdAt"],
+          "exampleEndpoint": "POST /plan-items/{id}/votes | GET/POST /trips/{id}/comments",
+          "adminCapabilities": ["moderate", "delete"],
+          "notes": "Yorumlar için şikayet/moderasyon kuyruğu beklenir."
+        }
+      ]
+    },
+    {
+      "route": "/map",
+      "screenFile": "src/app/map/index.tsx",
+      "dataNeeds": [
+        {
+          "entity": "PlanItem (koordinatlı)",
+          "typeRef": "src/types/plan.ts#PlanItem + src/types/place.ts#Place.coordinates",
+          "keyFields": ["id", "title", "placeId", "coordinates.lat", "coordinates.lng", "category"],
+          "exampleEndpoint": "GET /trips/{id}/plan-versions/active?include=places",
+          "adminCapabilities": ["read"],
+          "notes": "Her plan durağının koordinatı Place üzerinden gelmeli; koordinatsız durak haritada gösterilemez."
+        },
+        {
+          "entity": "TravelPin",
+          "typeRef": "src/types/social.ts#TravelPin",
+          "keyFields": ["id", "placeName", "city", "coordinates", "category", "photoUrl"],
+          "exampleEndpoint": "GET /users/me/pins",
+          "adminCapabilities": ["read", "moderate"],
+          "notes": "Gezilen yerler katmanı."
+        }
+      ]
+    },
+    {
+      "route": "/journal",
+      "screenFile": "src/app/journal/index.tsx",
+      "dataNeeds": [
+        {
+          "entity": "TravelPin (CRUD)",
+          "typeRef": "src/types/social.ts#TravelPin",
+          "keyFields": ["id", "placeId", "placeName", "city", "countryCode", "coordinates", "photoUrl", "caption", "createdAt"],
+          "exampleEndpoint": "GET/POST/DELETE /users/me/pins",
+          "adminCapabilities": ["read", "moderate", "delete"],
+          "notes": "Check-in fotoğrafları için içerik moderasyonu beklenir. İstatistikler (ülke/şehir/yer sayısı) backend'de hesaplanabilir: GET /users/me/travel-stats."
+        }
+      ]
+    },
+    {
+      "route": "/recommendations/[city]",
+      "screenFile": "src/app/recommendations/[city].tsx",
+      "dataNeeds": [
+        {
+          "entity": "CommunityRecommendation",
+          "typeRef": "src/types/social.ts#CommunityRecommendation",
+          "keyFields": ["id", "placeId", "placeName", "city", "category", "imageUrl", "tripsoRating", "tripsoReviewCount", "googleRating", "googleReviewCount", "likeCount"],
+          "exampleEndpoint": "GET /cities/{city}/recommendations?category={cat}&sort=likes",
+          "adminCapabilities": ["moderate", "curate", "publish"],
+          "notes": "Topluluk önerileri moderasyondan geçmeli; admin öne çıkarma (pin-to-top) yapabilmeli. googleRating canlı Google Places çağrısından, ASLA veritabanına yazılmaz (TOS)."
+        }
+      ]
+    },
+    {
+      "route": "/place/[id]",
+      "screenFile": "src/app/place/[id].tsx",
+      "dataNeeds": [
+        {
+          "entity": "Place + PlaceMetadata",
+          "typeRef": "src/types/place.ts#Place",
+          "keyFields": ["id", "name", "cityName", "countryCode", "coordinates", "category", "metadata.openingHours", "metadata.photos", "googlePlaceId"],
+          "exampleEndpoint": "GET /places/{id}",
+          "adminCapabilities": ["create", "update", "moderate"],
+          "notes": "Temel mekân kaydı bizde; puan/yorum/çalışma saatleri Google Places (New) canlı çağrısıyla zenginleştirilir — yorumlar cache'lenmez (Google TOS)."
+        },
+        {
+          "entity": "PlaceReview (tripso kaynaklı)",
+          "typeRef": "src/types/review.ts#PlaceReview",
+          "keyFields": ["id", "authorName", "rating", "comment", "createdAt", "source"],
+          "exampleEndpoint": "GET/POST /places/{id}/reviews",
+          "adminCapabilities": ["moderate", "delete"],
+          "notes": "Tripso topluluk yorumları için moderasyon kuyruğu."
+        }
+      ]
+    },
+    {
+      "route": "/saved",
+      "screenFile": "src/app/saved/index.tsx",
+      "dataNeeds": [
+        {
+          "entity": "SavedCollection + SavedItem",
+          "typeRef": "src/types/collection.ts#SavedCollection",
+          "keyFields": ["id", "name", "coverImageUrl", "items[].placeId", "items[].name", "items[].imageUrl"],
+          "exampleEndpoint": "GET/POST /users/me/collections",
+          "adminCapabilities": ["read", "curate"],
+          "notes": "Kullanıcı koleksiyonları. Ek olarak admin'in yayınladığı küratörlü koleksiyonlar (bkz. product-plan §4 v2-2) aynı tipi kullanır: GET /collections/featured."
+        }
+      ]
+    },
+    {
+      "route": "/notifications",
+      "screenFile": "src/app/notifications/index.tsx",
+      "dataNeeds": [
+        {
+          "entity": "Notification",
+          "typeRef": "src/types/notification.ts#Notification",
+          "keyFields": ["id", "type", "status", "title", "body", "data.route", "imageUrl", "sentAt"],
+          "exampleEndpoint": "GET /notifications | PATCH /notifications/read-all",
+          "adminCapabilities": ["create", "publish", "schedule", "configure"],
+          "notes": "Admin panelinden kampanya bildirimi (şablon + hedef kitle + zamanlama) gönderilebilmeli; data.route uygulama içi derin link."
+        }
+      ]
+    },
+    {
+      "route": "/personalize",
+      "screenFile": "src/app/personalize/index.tsx",
+      "dataNeeds": [
+        {
+          "entity": "UserProfile",
+          "typeRef": "src/types/user.ts#UserProfile",
+          "keyFields": ["dietary", "alcohol", "accommodationTier", "pace", "interests", "ageGroup"],
+          "exampleEndpoint": "GET/PATCH /users/me/profile",
+          "adminCapabilities": ["read", "configure"],
+          "notes": "Enum katalogları (dietary seçenekleri, ageGroup aralıkları, interests listesi) admin'den configure edilebilir olmalı — AI ProfileSnapshot'ını besler."
+        }
+      ]
+    },
+    {
+      "route": "/(onboarding)/welcome",
+      "screenFile": "src/app/(onboarding)/welcome.tsx",
+      "dataNeeds": [
+        {
+          "entity": "OnboardingSlide",
+          "typeRef": "src/components/onboarding/onboarding-slide.tsx#OnboardingSlideData",
+          "keyFields": ["key", "title", "subtitle", "image"],
+          "exampleEndpoint": "GET /content/onboarding (opsiyonel — şu an bundle içi)",
+          "adminCapabilities": ["update", "publish"],
+          "notes": "Metinler i18n'den; görseller şimdilik uygulama paketinde. Uzaktan yönetim istenirse CDN görseli + i18n metni admin'den yayınlanır."
+        }
+      ]
+    },
+    {
+      "route": "/(auth)/*",
+      "screenFile": "src/app/(auth)/login.tsx",
+      "dataNeeds": [
+        {
+          "entity": "User + TokenPair",
+          "typeRef": "src/types/user.ts#User + src/types/auth.ts#TokenPair",
+          "keyFields": ["email", "name", "avatarUrl", "accessToken", "refreshToken"],
+          "exampleEndpoint": "POST /auth/google | POST /auth/apple | POST /auth/login",
+          "adminCapabilities": ["read", "configure", "moderate"],
+          "notes": "Admin: kullanıcı listesi/arama, hesap askıya alma, sosyal sağlayıcı aç/kapa (e-posta girişi feature flag'i mevcut: EXPO_PUBLIC_AUTH_EMAIL_ENABLED)."
+        }
+      ]
+    }
+  ]
+}

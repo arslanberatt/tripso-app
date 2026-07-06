@@ -174,6 +174,27 @@ Sayfa gerektirmeyen, mevcut ekranlara güç katan fikirler:
 - **Rezervasyon yönlendirmeleri** — otel/uçak/restoran için dış linkler (ileride affiliate gelir kapısı)
 - Halihazırda mevcut: dark mode, en/tr çoklu dil, onboarding akışı
 
+### Yeni Özellik Önerileri (v2)
+
+Yukarıdakilerle çakışmayan, çoğu **admin paneliyle beslenen** ikinci dalga fikirler
+(sayfa bazlı veri beklentileri için bkz. [admin-panel-expectations.json](admin-panel-expectations.json)):
+
+1. **Admin yönetimli kampanya / öne çıkan içerik** — Home'daki PromoBanner ve "Top
+   Destinations" sıralaması admin panelinden yönetilir (kampanya metni, görsel, hedef
+   link, yayın tarihi aralığı). Uygulama güncellemesi olmadan vitrin değiştirilebilir.
+2. **Sezonluk / küratörlü koleksiyonlar** — "Yaz 2026 Akdeniz", "Vizesiz Rotalar" gibi
+   editör seçkileri; mevcut `SavedCollection` altyapısını yeniden kullanır, admin
+   `curate/publish` eder.
+3. **Fiyat düşüş alarmları** — kaydedilen destinasyon/otel için fiyat düşünce push
+   bildirimi; `Notification` tipine yeni bir tür eklenir, backend fiyat izleme yapar.
+4. **Referral programı** — davet linkiyle gelen her arkadaş için rozet/premium hakkı;
+   Ortak Plan'daki davet linki altyapısı yeniden kullanılır.
+5. **eSIM + seyahat sigortası upsell** — plan detayında destinasyona göre bağlamsal
+   affiliate kartları ("Japonya için eSIM", "Schengen sigortası"); admin panelinden
+   sağlayıcı/komisyon yönetimi.
+6. **Mini şehir rehberleri / ipuçları** — admin'in yayınladığı kısa içerik kartları
+   ("Paris'te metro nasıl kullanılır"); şehir öneri sayfasını ve plan detayını besler.
+
 ---
 
 ## 5. Entegrasyonlar
