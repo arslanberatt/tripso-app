@@ -1,8 +1,9 @@
 /**
  * Onboarding slayt verisi — yerel karakter görselleri + slayt anahtarları.
  * Metinler i18n'den (`content:onboarding.<key>.*`) çözülür; buradaki `title`/
- * `subtitle` yalnız fallback (defaultValue) içindir. Görseller beyaz zeminli
- * karakter PNG/webp'leri (`assets/images/onboarding/`).
+ * `subtitle` yalnız fallback (defaultValue) içindir. Görsellerin beyaz zemini
+ * dosyaya gömülüdür; slayt bu yüzden her temada açık renkli bir artwork paneli
+ * içinde gösterir (bkz. onboarding-slide.tsx `ART_SURFACE`).
  */
 
 import type { OnboardingSlideData } from '@/components/onboarding/onboarding-slide';

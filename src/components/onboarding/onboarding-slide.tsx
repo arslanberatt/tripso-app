@@ -4,7 +4,7 @@ import { StyleSheet, View, useWindowDimensions, type ImageSourcePropType } from 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
-import { Spacing } from '@/constants/theme';
+import { Radii, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 export type OnboardingSlideData = {
@@ -14,8 +14,16 @@ export type OnboardingSlideData = {
   image: ImageSourcePropType;
 };
 
-// Footer (noktalar + Sonraki) için altta bırakılan pay; absolute metin bunun üstünde durur.
+// Footer (noktalar + Sonraki) için altta bırakılan pay; metin bloğu bunun üstünde durur.
 const FOOTER_RESERVE = 120;
+
+/**
+ * Artwork paneli HER TEMADA beyazdır: onboarding görsellerinin beyaz zemini
+ * dosyanın içine gömülü (şeffaflaştırılamaz — degrade kenarlar key'lenemez).
+ * Dark modda görseli siyah zemine basmak yerine bilinçli açık panel gösterilir;
+ * tasarımcı şeffaf zeminli asset üretirse bu sabit kaldırılabilir.
+ */
+const ART_SURFACE = '#FFFFFF';
 
 export function OnboardingSlide({ slide }: { slide: OnboardingSlideData }) {
   const { width, height } = useWindowDimensions();
@@ -28,16 +36,20 @@ export function OnboardingSlide({ slide }: { slide: OnboardingSlideData }) {
     defaultValue: slide.subtitle,
   });
 
+  // Üstte artwork paneli, altta temalı metin alanı (footer payının üstünde).
+  const artHeight = height * 0.62;
 
   return (
     <View style={[styles.slide, { width }]}>
-      <Image
-        source={slide.image}
-        style={{ width: '100%', height: "100%", marginTop:  - Spacing.five }}
-        contentFit="contain"
-        transition={250}
-        accessibilityLabel={title}
-      />
+      <View style={[styles.artPanel, { height: artHeight, backgroundColor: ART_SURFACE }]}>
+        <Image
+          source={slide.image}
+          style={styles.artImage}
+          contentFit="contain"
+          transition={250}
+          accessibilityLabel={title}
+        />
+      </View>
 
       <View style={[styles.content, { bottom: FOOTER_RESERVE + insets.bottom }]}>
         <ThemedText type="h1" style={[styles.title, { color: theme.text }]}>
@@ -52,7 +64,14 @@ export function OnboardingSlide({ slide }: { slide: OnboardingSlideData }) {
 }
 
 const styles = StyleSheet.create({
-  slide: { flex: 1, alignItems: 'center', justifyContent: 'flex-start' },
+  slide: { flex: 1, alignItems: 'stretch', justifyContent: 'flex-start' },
+  artPanel: {
+    borderBottomLeftRadius: Radii.xl,
+    borderBottomRightRadius: Radii.xl,
+    overflow: 'hidden',
+    paddingTop: Spacing.four,
+  },
+  artImage: { width: '100%', height: '100%' },
   content: {
     position: 'absolute',
     left: 0,
